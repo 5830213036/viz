@@ -10,6 +10,9 @@ import vUploader from 'v-uploader'
 //Xlsx
 import vueXlsxTable from 'vue-xlsx-table'
 
+import VueSwal from 'vue-swal'
+Vue.use(VueSwal)
+
 Vue.use(require('vue-moment'));
 var SocialSharing = require('vue-social-sharing');
 Vue.use(SocialSharing);

@@ -1,211 +1,205 @@
 <template>
     <div>
-        <h1>Vue-xlsx-table</h1>
-        <p>Not need upload, view xlsx or xls file in your browser, Supported by js-xlsx.</p>
-        <vue-xlsx-table @on-select-file="handleSelectedFile">
-            Select one file
-        </vue-xlsx-table>    
-        <b-modal  v-model="modalShow" v-if="xlsdata"  title="If all right" @ok="handleOk">            
-            <table  class="table">
-                <thead >
-                    <tr>
-                        <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(body, index) in xlsdata.body" :key="index">
-                        <td v-for="item in body" :key="item">{{item}}</td>
-                    </tr>
-                </tbody>
-            </table>            
-        </b-modal>   
-      <div v-if="isdataOk">        
-        <table class="table" >            
-          <thead >
-            <tr>
-              <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(body, index) in xlsdata.body" :key="index">
-              <td v-for="item in body" :key="item">{{item}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <b-form-group class="head mt-3" label="Select a Chart">
-          <b-form-radio-group v-model="selected" :options="options"></b-form-radio-group>
-        </b-form-group> 
+        <!-- Navbar -->
+            <b-navbar toggleable="md" type="dark" variant="info">
+                <!-- <b-navbar-toggle target="nav_collapse"></b-navbar-toggle> -->
+                    <router-link :to="{ name :'Main'}">
+                        <b-navbar-brand>PTEI Visualization</b-navbar-brand>
+                    </router-link>
+        <!-- Right aligned nav items -->
+            <b-collapse is-nav id="nav_collapse">
+                <b-navbar-nav class="ml-auto">
+                    <b-nav-form>
+                        <b-button size="sm" class="my-2 my-sm-0" type="submit" @click="signIn()">
+                            Sign In
+                        </b-button>
+       
+           
+                    </b-nav-form>
+                </b-navbar-nav>
+            </b-collapse>
+            </b-navbar>
+        <!-- Image -->
+             <div>
+                <b-img :src="image" fluid-grow height="500" width="500"/> 
+        <!-- fluid-grow -->
+            </div>
 
-        <div class="small">
-          <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-          <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-          <pie v-if="selected =='pie'" :data="graphdata"></pie>
-          <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
-          <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
-        </div>
-      </div>
     </div>
 </template>
 
 <script>
-import db from "@/firebase/init";
-import Bar from "../Chart/BarChart.js";
-import LineChart from "../Chart/LineChart.js";
-import Doughnut from "../Chart/DoughnutChart.js";
-import Pie from "../Chart/PieChart.js";
-import HorizontalBar from "../Chart/HorizontalChart.js";
-import bargroup from "../Chart/BarChartGroup.js";
-
+import firebase from "firebase";
+//Other
+import Footer from "../Other/Footer.vue";
 export default {
-  name: "app",
-  components: { LineChart, Doughnut, Pie, HorizontalBar, bargroup },
-
+  name: "User",
+  components: { Footer },
   data() {
     return {
-      graphdata: {
-        labels: [],
-        datasets: []
-      },
-      xlsdata: null,
-      modalShow: false,
-      isdataOk: false,
-      selected: null,
-      options: [
-        { text: "Line", value: "line" },
-        { text: "Bar", value: "bar" },
-        { text: "Doughnut", value: "doughnut" },
-        { text: "Pie", value: "pie" },
-        { text: "Horizontal", value: "horizontal" },
-        { text: "Bar Group", value: "bargroup" }
-      ]
+      image: require("@/assets/PTEIHEAD.png"),
+      formData: {
+        email: "",
+        password: ""
+      }
     };
   },
   methods: {
-    handleSelectedFile(convertedData) {
-      console.log(convertedData);
-      this.xlsdata = convertedData;
-      //   window.alert(JSON.stringify(convertedData))
-      this.modalShow = true;
-    },
-
-    // this.graphdata.labels = this.xlsdata.header
-    //   for(var key in this.xlsdata.body[0]){
-    //     this.graphdata.values.push(this.xlsdata.body[0][key])
-    //   }
-    handleOk() {
-      console.log("handleOK");
-      let graphheader = this.xlsdata.header.slice();
-      let found = graphheader.indexOf("Title");
-      if (found != -1) graphheader.splice(found, 1);
-      this.graphdata.labels = graphheader;
-
-      for (let index in this.xlsdata.body) {
-        let body = this.xlsdata.body[index];
-
-        let dataset = {
-          label: [],
-          data: [],
-          fill: false,
-          borderColor: [],
-          backgroundColor: []
-        };
-        for (let item in body) {
-          if (item == "Title") {
-            dataset.label = body[item];
-            dataset.backgroundColor = this.getcolors();
-            dataset.borderColor = this.getcolors();
-          } else {
-            dataset.data.push(body[item]);
-          }
-        }
-        this.graphdata.datasets.push(dataset);
-      }
-
-      this.isdataOk = true;
-      // var label = Object.keys(this.xlsdata.body[0])
-      //  for(let [item,index] in this.xlsdata.body){
-
-      //    let data = {
-      //       label : '' ,
-      //       data : [],
-      //       backgroundColor:[
-      //         'rgba(255, 99, 132, 0.6)',
-      //         'rgba(54, 162, 235, 0.6)',
-      //         'rgba(255, 206, 86, 0.6)',
-      //         'rgba(75, 192, 192, 0.6)',
-      //         'rgba(153, 102, 255, 0.6)',
-      //         'rgba(255, 159, 64, 0.6)',
-      //         'rgba(132,255,99, 0.6)',
-      //         ],
-      //         borderWidth:1,
-      //         borderColor:'#777',
-      //         hoverBorderWidth:3,
-      //         hoverBorderColor:'#000'
-      //     }
-      //     data.label = label[item]
-      //     console.log(data.label)
-      //    let currentItem = this.xlsdata.body[item]
-      //     for (let key in currentItem) {
-      //       data.data.push(currentItem[key])
-      //    }
-      //    console.log(data)
-      //    this.graphdata.datasets.push(data)
-      //  }
-      //  console.log(this.graphdata.datasets)
-      //   this.isdataOk=true;
-      // -----------------------------------------------
-      // db.collection("blogs")
-      //   .add(this.xlsdata)
-      //   .then(() => {
-      //     console.log("added");
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
-    },
-    getcolors() {
-      let letters = "789ABCD".split("");
-      let color = "#";
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.round(Math.random() * 6)];
-      }
-      return color;
+    signIn() {
+      swal({
+        text: 'Search for a movie. e.g. "La La Land".',
+        contents: {
+          type : "input",
+          password : "input"
+        },
+        button: {
+        text: "Search!",
+        closeModal: false,
+  },
+})
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.formData.email, this.formData.password)
+        .then(user => {
+          this.$router.push("Overviews");
+        })
+        // .catch(e => {
+        //   alert(e.message);
+        // });
     }
   }
 };
 </script>
 
-<style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 30px;
+<style scoped>
+/* Center the image and position the close button */
+input[type="text"] {
+  padding: 16px;
+  border-radius: 4px 4px 0 0;
+  background: transparent;
+  border: 1px solid #cfd0d1;
+  display: block;
+  margin: 0 auto;
+  width: 75%;
 }
-h1,
-h2,
-h3 {
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
+input[type="password"] {
+  padding: 16px;
+  border-radius: 0 0 4px 4px;
+  border: 1px solid #cfd0d1;
+  border-top: none;
+  background: transparent;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 12px;
+  width: 75%;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+input[type="submit"] {
+  padding: 10px;
+  border-radius: 50px;
+  background: #129793;
+  border: none;
+  box-shadow: 0 8px 15px 0 rgba(18, 151, 147, 0.4);
+  display: inline;
+  margin-left: 90px;
+  margin-top: 10px;
+  width: 30%;
+  color: white;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+.container-signin {
+  position: relative;
+  width: 700px;
+  height: 350px;
+  margin: 0 auto;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 0 8px 2px #ccc;
+  margin-top: 50px;
 }
-a {
-  color: #42b983;
-}
-.t-center {
+h1 {
   text-align: center;
-  margin: 20px;
+  font-weight: 100;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  padding-top: 50px;
 }
-.mt150 {
-  margin-top: 150px;
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.m-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+
+  width: 700px;
+  height: 350px; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+  position: absolute;
+  right: 25px;
+  top: 0;
+  color: #000;
+  font-size: 35px;
+  font-weight: bold;
+}
+.close:hover,
+.close:focus {
+  color: red;
+  cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s;
+}
+
+@-webkit-keyframes animatezoom {
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes animatezoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+  span.psw {
+    display: block;
+    float: none;
+  }
 }
 </style>

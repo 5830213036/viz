@@ -3,8 +3,6 @@
     <!-- Admin -->
     <Admin/>
     <!-- Search -->
-
-  
     <b-nav-form class="search" center>
         <b-form-input size="lg"  v-model="search" type="text" placeholder="Search"/>
         <!-- <b-button size="sm" class="my-2 my-sm-0" type="submit" variant="warning">Search</b-button> -->
@@ -12,9 +10,6 @@
             <b-button variant="success">Create</b-button>
         </router-link>
     </b-nav-form>
-  
-    
-
     <!-- Contents blog -->
         <b-card class="card mb-3"  v-for="blog in bsearch" :key="blog.id">
             <!-- Delete -->
@@ -55,55 +50,68 @@
 </template>
 
 <script>
-import db from '@/firebase/init'
-import Admin from '../Admin/Admin.vue'
+import db from "@/firebase/init";
+import Admin from "../Admin/Admin.vue";
 //Other
-import Footer from '../Other/Footer.vue'
+import Footer from "../Other/Footer.vue";
 export default {
-    components :{Admin, Footer},
-    name : 'Main',
-    data(){
-        return{
-            blogs : [],
-            search : ''
-        }
-    },
-    created(){
- 
-    let ref = db.collection('blogs').orderBy('time')
-    ref.get()
-        .then(snapshot => {
-            snapshot.forEach(doc => {
-                console.log(doc.data())
-                let blog = doc.data()
-                blog.id = doc.id
-                this.blogs.push(blog)
-                // this.blogs.push(doc.data())
-            });
-        })
-        
-    },
-    computed: {
-        bsearch(){
-            return this.blogs.filter(blog => {
-              return  blog.title.toLowerCase().includes(this.search.toLowerCase())
-            })
-        }
-    },
-    methods : {
-        deleteblog(id){
-            db.collection('blogs').doc(id).delete().then(() =>{
-                this.blogs = this.blogs.filter(blog => {
-                    return blog.id != id
-                })
-            })
-        }
+  components: { Admin, Footer },
+  name: "Main",
+  data() {
+    return {
+      blogs: [],
+      search: ""
+    };
+  },
+  created() {
+    let ref = db.collection("blogs").orderBy("time");
+    ref.get().then(snapshot => {
+      snapshot.forEach(doc => {
+        console.log(doc.data());
+        let blog = doc.data();
+        blog.id = doc.id;
+        this.blogs.push(blog);
+        // this.blogs.push(doc.data())
+      });
+    });
+  },
+  computed: {
+    bsearch() {
+      return this.blogs.filter(blog => {
+        return blog.title.toLowerCase().includes(this.search.toLowerCase());
+      });
     }
-}
+  },
+  methods: {
+    deleteblog(id) {
+      this.$swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this bolg!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(willDelete => {
+        if (willDelete) {
+          swal("Deleted!","Poof! Your blog has been deleted!", {
+            icon: "success"
+          });
+          db.collection("blogs")
+            .doc(id)
+            .delete()
+            .then(() => {
+              this.blogs = this.blogs.filter(blog => {
+                return blog.id != id;
+              });
+            });
+        } else {
+          //   swal("Your imaginary file is safe!");
+        }
+      });
+    }
+  }
+};
 </script>
-
 <style scoped>
-
 .card {
   text-align: center;
   max-width: 800px auto;
@@ -136,7 +144,7 @@ export default {
 }
 
 .button span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -152,30 +160,27 @@ export default {
   opacity: 1;
   right: 0;
 }
-.search{
-    margin-left: 100px;
-    padding-top:20px;
-    width: 75%;
+.search {
+  margin-left: 100px;
+  padding-top: 20px;
+  width: 75%;
 }
 input[type="text"] {
   padding: 16px;
   border-radius: 4px 4px 0 0;
   background: transparent;
-  border: 1px solid #CFD0D1;
+  border: 1px solid #cfd0d1;
   display: block;
   margin: 0 auto;
   width: 75%;
 }
 
-.content{
-    margin-top: 100px;
+.content {
+  margin-top: 100px;
 }
 
 .add {
   text-align: left;
-  font-family: 'Proxima Nova Soft', 'Helvetica Neue', sans-serif;
-  
-  
+  font-family: "Proxima Nova Soft", "Helvetica Neue", sans-serif;
 }
-
 </style>

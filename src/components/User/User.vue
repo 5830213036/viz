@@ -10,16 +10,24 @@
             <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav class="ml-auto">
                     <b-nav-form>
-                        <b-button size="sm" class="my-2 my-sm-0" type="submit" onclick="document.getElementById('signin').style.display='block'">
+                        <b-button size="sm" class="my-2 my-sm-0" onclick="document.getElementById('signin').style.display='block'">
                             Sign In
                         </b-button>
         <!-- The Modal -->
             <div id="signin" class="modal">
                 <span onclick="document.getElementById('signin').style.display='none'" class="close" title="Close Modal">&times;</span>
         <!-- Modal Content -->
+        
             <form class="m-content animate">
                 <div class="container-signin">
                     <h1>Welcome</h1>
+                    <div class="form-group">
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email Address">
+                    </div>
+
+                    <div class="form-group">
+                      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    </div>
                         <input type="text" placeholder="Email" v-model="formData.email" required/>
                         <input type="password" placeholder="Password" v-model="formData.password" required/>
                         <input type="submit" width="" value="Sign In"  @click="signIn()"/>
@@ -120,6 +128,11 @@ input[type="submit"] {
   border: 1px solid #eeeeee;
   box-shadow: 0 0 8px 2px #ccc;
   margin-top: 50px;
+  text-align: center;
+}
+.container-signin.form-control {
+  text-align: center;
+  margin-bottom:10px;
 }
 h1 {
   text-align: center;

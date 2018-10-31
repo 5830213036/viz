@@ -18,8 +18,16 @@ export default {
             display: true,
             text: 'Population growth (millions)'
           }
-        }
-           
+        },
+        options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero: true
+                  }
+              }]
+          }
+      }
           
         
       })

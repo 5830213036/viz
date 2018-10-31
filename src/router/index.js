@@ -13,7 +13,7 @@ import Test from '@/components/Admin/Test'
 import Editblog from '@/components/Admin/Editblog'
 import Detailblog from '@/components/Admin/Detailblog'
 import Addblog from '@/components/Admin/Addblog'
-import Signin from '@/components/Admin/Signin'
+// import Signin from '@/components/Admin/Signin'
 
 Vue.use(Router)
 

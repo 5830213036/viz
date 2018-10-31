@@ -38,14 +38,12 @@
       <div>
         <h1>Vue-xlsx-table</h1>
         <p>Not need upload, view xlsx or xls file in your browser, Supported by js-xlsx.</p>
-        <vue-xlsx-table @on-select-file="handleSelectedFile">
-            Import Your Data
-        </vue-xlsx-table>    
+        <vue-xlsx-table @on-select-file="handleSelectedFile" class="add"> Import Your Data </vue-xlsx-table>    
         <b-modal  v-model="modalShow" v-if="xlsdata"  title="If all right" @ok="handleOk">            
-            <table  class="table">
+            <table  class="table table-bordered">
                 <thead >
                     <tr>
-                        <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
+                        <th v-for="(head, index) in xlsdata.header" :key="index">{{head}}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,8 +53,9 @@
                 </tbody>
             </table>            
         </b-modal>   
+
       <div v-if="isdataOk">        
-        <table class="table" >            
+        <table class="table table-bordered mt-3" >            
           <thead >
             <tr>
               <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
@@ -141,7 +140,7 @@
  <div class="small">
     <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
     <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-    <pie v-if="selected =='pie'" :data="graphdata"></pie>
+    <pie v-if="selected =='pie'" :data="graphdata" ></pie>
     <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
     <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
   </div>
@@ -278,6 +277,7 @@ export default {
           fill : false,
           borderColor: [],
           backgroundColor: []
+          
         };
         for (let item in body) {
           if (item == "Title") {
@@ -353,6 +353,6 @@ export default {
 }
 .radio-component {
   border-color: #4d82ff;
-  background: #849edb;
+  /* background: #849edb; */
 }
 </style>
