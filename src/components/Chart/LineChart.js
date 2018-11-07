@@ -8,8 +8,9 @@ export default {
       labels: this.data.labels,
       datasets: this.data.datasets
       
-      ,options:{
-      title: {
+      ,
+      options:{
+        title: {
         display: true,
         text: "Relationship between purpose and nationality",
         fontSize:25,

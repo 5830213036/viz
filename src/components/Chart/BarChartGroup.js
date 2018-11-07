@@ -10,6 +10,7 @@ export default {
       datasets: this.data.datasets
       
       ,
+     
       options: {
         title: {
           display: true,

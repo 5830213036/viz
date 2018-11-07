@@ -20,6 +20,7 @@ export default {
 </script>
 
 <style>
+
 #app {
   font-family: Calibri;
   font-size: 20px;
@@ -27,4 +28,5 @@ export default {
   color: #2c3e50;
   margin-top: 0px;
 }
+
 </style>

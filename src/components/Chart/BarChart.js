@@ -13,7 +13,8 @@ export default {
         label : this.data.labels,
         data : this.data.datasets
      
-        ,options: {
+        ,
+        options: {
           title: {
             display: true,
             text: 'Population growth (millions)'

@@ -2,36 +2,46 @@
     <div>
     <!-- Admin -->
     <Admin/>
+
     <!-- Search -->
-    <b-nav-form class="search" center>
-        <b-form-input size="lg"  v-model="search" type="text" placeholder="Search"/>
-        <!-- <b-button size="sm" class="my-2 my-sm-0" type="submit" variant="warning">Search</b-button> -->
-        <router-link :to="{ name : 'Addblog'}" >
-            <b-button variant="success">Create</b-button>
-        </router-link>
-    </b-nav-form>
+    <section>
+      <b-nav-form class="search">       
+        <b-form-input size="md" v-model="search" type="text" placeholder="Search keywords..."/>
+          <Share/>
+          <!-- Create a blog -->
+          <router-link :to="{ name : 'Addblog'}" >
+            <b-button  class="button-c">Create</b-button>
+          </router-link>
+      </b-nav-form>
+    </section>
+
+
     <!-- Contents blog -->
-        <b-card class="card mb-3"  v-for="blog in bsearch" :key="blog.id">
+        <b-card class="card mb-4"  v-for="blog in bsearch" :key="blog.id">          
+                        
+          
             <!-- Delete -->
-            <b-button type="button" class="close" aria-label="Close"  >                
-                <img @click="deleteblog(blog.id)" src="../../assets/delete.png" width="30" height="25" />                
-            </b-button>
+            <div class="close">    
+                <img @click="deleteblog(blog.id)" src="../../assets/delete.png" width="30" height="25" />              
+            </div> 
             
             <!-- Edit -->
-            <b-button type="button" class="close" aria-label="Close">
+            <div class="close">
                 <router-link :to="{name:'Editblog', params: {edit_slug: blog.slug}}">
-                    <img  src="../../assets/edit.png" width="25" height="25"/>
+                    <img   src="../../assets/edit.png" width="25" height="25"/>
                 </router-link>
-            </b-button>
+            </div>
 
+            
+          
             <b-media no-body>
                 <b-media-aside vertical-align="center">
-                    <img  blank blank-color="#ccc" width="400"  height="300" alt="placeholder" :src="blog.imagepreview"/>
+                    <img  blank blank-color="#ccc" width="450"  height="300" alt="placeholder" :src="blog.imagepreview"/>
                 </b-media-aside>
                     <b-media-body class="ml-3">
                         <b-media-body class="content">
                             <h4 class="mt-0 mb-1">{{blog.title}}</h4>
-                            {{ blog.time}}
+                            <!-- <i class="post-meta">{{ blog.time}}</i> -->
                             <!-- <h6>
                                 {{blog.description}}
                             </h6>        -->
@@ -39,13 +49,15 @@
                                 <router-link :to="{name : 'Detailblog', params: {detail_slug : blog.slug}}">
                                     <button size="sm" class="button" style="vertical-align:middle" type="submit" ><span>Read More</span></button>
                                 </router-link>
+                                
                             </div>
+                            <i class="post-meta">{{ blog.time}}</i>
                         </b-media-body>  
                     </b-media-body>
+                   
                 </b-media>
+
         </b-card>
-        <!-- Footer -->
-   
     </div>
 </template>
 
@@ -54,8 +66,9 @@ import db from "@/firebase/init";
 import Admin from "../Admin/Admin.vue";
 //Other
 import Footer from "../Other/Footer.vue";
+import Share from '../Other/Share.vue'
 export default {
-  components: { Admin, Footer },
+  components: { Admin, Footer ,Share},
   name: "Main",
   data() {
     return {
@@ -92,7 +105,7 @@ export default {
         dangerMode: true
       }).then(willDelete => {
         if (willDelete) {
-          swal("Deleted!","Poof! Your blog has been deleted!", {
+          swal("Deleted!", "Poof! Your blog has been deleted!", {
             icon: "success"
           });
           db.collection("blogs")
@@ -112,24 +125,60 @@ export default {
 };
 </script>
 <style scoped>
+
+.search{
+  margin: 20px;
+  margin-left: 150px;
+  margin-right: 60px;
+}
+
+input[type="text"] {
+  width: 190px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+  padding: 5px 30px;
+  margin: 10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 30px;
+}
+
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px blue;
+  width: 63%;
+}
+
 .card {
   text-align: center;
-  max-width: 800px auto;
-  margin-top: 30px;
-  margin-right: 100px;
-  margin-left: 100px;
+  max-width: 75%;
+  margin-top: 20px;
+  /* margin-right: 100px;
+  margin-left: 100px; */
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 }
+
+.card:hover {
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
 .button {
   display: inline-block;
   border-radius: 50px;
-  background-color: #df75a6;
+  background: linear-gradient(#db4bc8, #9198e0);
+  /* background-color: #df75a6; */
   border: none;
   color: rgb(255, 255, 255);
   text-align: center;
-  font-size: 15px;
+  font-size: 14px;
   padding: 0px;
-  width: 130px;
-  height: 40px;
+  width: 110px;
+  height: 30px;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
@@ -160,27 +209,54 @@ export default {
   opacity: 1;
   right: 0;
 }
-.search {
-  margin-left: 100px;
-  padding-top: 20px;
-  width: 75%;
-}
-input[type="text"] {
-  padding: 16px;
-  border-radius: 4px 4px 0 0;
-  background: transparent;
-  border: 1px solid #cfd0d1;
-  display: block;
-  margin: 0 auto;
-  width: 75%;
+
+.button:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px white;
 }
 
 .content {
   margin-top: 100px;
 }
 
-.add {
-  text-align: left;
-  font-family: "Proxima Nova Soft", "Helvetica Neue", sans-serif;
+.button-c {
+  border-radius: 30px;
+  background: linear-gradient(#db4bc8, #9198e0);
+  border: none;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 15px;
+  padding: 2px;
+  width: 100px;
+  height: 30px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 4px;
+  margin-top: 4px;
+  
 }
+
+.post-meta {
+  color: #212529;
+  font-weight: 300;
+  font-family: 'Lora', 'Times New Roman', serif;
+  font-size: 15px;
+  float: right;
+  margin-top: 100px;
+  margin-right: -80px;
+
+}
+
+.close {
+  padding: 5px;  
+  
+  color: rgb(211, 27, 27);
+  
+  opacity: .4;
+}
+
+
+
+
+
 </style>

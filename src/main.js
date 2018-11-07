@@ -10,6 +10,9 @@ import vUploader from 'v-uploader'
 //Xlsx
 import vueXlsxTable from 'vue-xlsx-table'
 
+import VueGoodWizard from 'vue-good-wizard'
+Vue.use(VueGoodWizard)
+
 import VueSwal from 'vue-swal'
 Vue.use(VueSwal)
 
@@ -19,7 +22,7 @@ Vue.use(SocialSharing);
 import Paginate from 'vuejs-paginate'
 Vue.component('paginate', Paginate)
 Vue.use(vueXlsxTable)
-Vue.use(BootstrapVue,VueCharts)
+Vue.use(BootstrapVue, VueCharts)
 Vue.use(vUploader, uploaderConfig);
 Vue.component('downloadExcel', JsonExcel)
 
@@ -32,8 +35,8 @@ const uploaderConfig = {
   deleteFileUrl: 'http://xxx/upload/deleteUploadFile',
   // set the way to show upload message(upload fail message)
   showMessage: (vue, message) => {
-      //using v-dialogs to show message
-      vue.$vDialog.alert(message, null, {messageType: 'error'});
+    //using v-dialogs to show message
+    vue.$vDialog.alert(message, null, { messageType: 'error' });
   }
 };
 

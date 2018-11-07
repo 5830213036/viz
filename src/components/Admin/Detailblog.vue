@@ -2,31 +2,35 @@
   <div>
     <!-- Admin -->
     <Admin/>
-    <b-card class="add mb-3"  v-if="blog" :key="blog.id">
-      <div class="add mb-3" >
+
+    <b-card class="card"  v-if="blog" :key="blog.id">
+      <div class="mb-3" >
         <img blank blank-color="#ccc" width="600" height="450"  :src="blog.imagepreview"/>
       </div>
+
       <b-media>
         <b-media-body class="ml-3">
-          <h4>{{blog.title}}</h4>
-          <h6>
-            {{blog.description}}
-          </h6>
-            <!-- {{blog.selected}} -->
+          <i class="post-meta">{{ blog.time}}</i>
+          <h3 class="mt-4">{{blog.title}}</h3>
           
-              <div class="small">
-                <!-- <bar v-if="blog.selected == 'bar'" :data="graphdata"></bar> -->
-                <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
-                <!-- <doughnut v-if="blog.selected =='doughnut'" :data="graphdata"></doughnut>
-                <pie v-if="blog.selected =='pie'" :data="graphdata"></pie>
-                <bubble v-if="blog.selected =='bubble'" :data="graphdata"></bubble>
-                <horizaontal-bar v-if="blog.selected =='horizontal'" :data="graphdata"></horizaontal-bar> -->
-              </div>
+          <div class="row">
+            <h5  class="des mt-3">
+              {{blog.description}}
+            </h5>
+          </div>
+          
+          <div class="small">
+            <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
+            <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
+            <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
+            <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
+            <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
+          </div>
           <!-- <router-link :to="{ name : 'Overviews'}"><b-button variant="success">Back</b-button></router-link> -->
         </b-media-body>
       </b-media>
     </b-card>
-  <Footer/>
+  <!-- <Footer/> -->
   </div>
 </template>
 
@@ -90,11 +94,36 @@ export default {
 </script>
 
 <style>
+
+.card {
+  text-align: center;
+  max-width: auto;
+  margin-top: 30px;
+  margin-right: 100px;
+  margin-left: 100px;
+  margin-bottom: 40px;
+}
+
 .small {
   max-width: 600px;
   margin: 100px auto;
 }
-.img {
-  text-align: center;
+
+.post-meta {
+  color: #212529;
+  font-weight: 300;
+  font-family: 'Lora', 'Times New Roman', serif;
+  font-size: 15px;
 }
+
+.des {
+  text-align: justify;
+  text-indent: 50px;
+  line-height : normal;
+  margin-left: 80px;
+  margin-right: 80px;
+
+}
+
+
 </style>

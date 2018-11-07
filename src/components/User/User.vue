@@ -1,44 +1,43 @@
 <template>
     <div>
         <!-- Navbar -->
-            <b-navbar toggleable="md" type="dark" variant="info">
+            <b-navbar toggleable="md" type="dark" >
                 <!-- <b-navbar-toggle target="nav_collapse"></b-navbar-toggle> -->
                     <router-link :to="{ name :'Main'}">
-                        <b-navbar-brand>PTEI Visualization</b-navbar-brand>
+                        <b-navbar-brand class="navbar-brand">PTEI Visualization</b-navbar-brand>
                     </router-link>
         <!-- Right aligned nav items -->
-            <b-collapse is-nav id="nav_collapse">
+           <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav class="ml-auto">
                     <b-nav-form>
-                        <b-button size="sm" class="my-2 my-sm-0" onclick="document.getElementById('signin').style.display='block'">
-                            Sign In
-                        </b-button>
-        <!-- The Modal -->
-            <div id="signin" class="modal">
-                <span onclick="document.getElementById('signin').style.display='none'" class="close" title="Close Modal">&times;</span>
-        <!-- Modal Content -->
-        
-            <form class="m-content animate">
-                <div class="container-signin">
-                    <h1>Welcome</h1>
-                    <div class="form-group">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email Address">
-                    </div>
+                        <b-button size="sm" class="button" onclick="document.getElementById('signin').style.display='block'"><span>Sign In</span></b-button>
 
-                    <div class="form-group">
-                      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
-                    </div>
-                        <input type="text" placeholder="Email" v-model="formData.email" required/>
-                        <input type="password" placeholder="Password" v-model="formData.password" required/>
-                        <input type="submit" width="" value="Sign In"  @click="signIn()"/>
-                        <input type="submit" width="" value="Cancel"  onclick="document.getElementById('signin').style.display='none'"/>
-                </div> 
-            </form>
-            </div>
+
+                        <!-- The Modal -->
+                        <div id="signin" class="modal">  
+                          <form class="modal-content animate" >
+                            <div class="container" style="background:linear-gradient(#e66465, #9198e5)">
+                              <span onclick="document.getElementById('signin').style.display='none'" class="close" title="Close Modal">&times;</span>
+                              <b class="total">Admin Sign In</b>
+                            </div>
+
+                            <div class="container">
+                              <label class="label"><b>Email</b></label>      
+                              <input type="text" placeholder="Your Email" v-model="formData.email" required>      
+
+                              <label class="label"><b>Password</b></label>
+                              <input type="password" placeholder="Your Password"  v-model="formData.password" required>
+    
+                              <button class="btn-login" value="Sign In"  @click="signIn()"><b>SIGN IN</b></button>    
+                            </div>      
+                          </form>
+                        </div>
                     </b-nav-form>
                 </b-navbar-nav>
-            </b-collapse>
+              </b-collapse>
             </b-navbar>
+
+
         <!-- Image -->
              <div>
                 <b-img :src="image" fluid-grow height="500" width="500"/> 
@@ -83,93 +82,98 @@ export default {
 </script>
 
 <style scoped>
-/* Center the image and position the close button */
-input[type="text"] {
-  padding: 16px;
-  border-radius: 4px 4px 0 0;
-  background: transparent;
-  border: 1px solid #cfd0d1;
-  display: block;
-  margin: 0 auto;
-  width: 75%;
-}
-input[type="password"] {
-  padding: 16px;
-  border-radius: 0 0 4px 4px;
-  border: 1px solid #cfd0d1;
-  border-top: none;
-  background: transparent;
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 12px;
-  width: 75%;
+
+.navbar {    
+  background: linear-gradient(#e66465, #b0b5f0);
+  /* background:#e66465; */
+  border: 5px;
+  border-color: #ccc;
+  width: 100%;
+   
 }
 
-input[type="submit"] {
-  padding: 10px;
-  border-radius: 50px;
-  background: #129793;
-  border: none;
-  box-shadow: 0 8px 15px 0 rgba(18, 151, 147, 0.4);
-  display: inline;
-  margin-left: 90px;
-  margin-top: 10px;
-  width: 30%;
+input[type=text], input[type=password] {
+  width: 80%;
+  padding: 5px 30px;
+  margin:10px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 30px;
+        
+}
+
+input[type=text]:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px blue;
+}
+
+.label {
+  justify-content:left;
+  margin-left: 80px
+}
+
+.total{
+  font-size: 25px;
   color: white;
-  text-transform: uppercase;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-.container-signin {
-  position: relative;
-  width: 700px;
-  height: 350px;
-  margin: 0 auto;
-  border: 1px solid #eeeeee;
-  box-shadow: 0 0 8px 2px #ccc;
-  margin-top: 50px;
-  text-align: center;
-}
-.container-signin.form-control {
-  text-align: center;
-  margin-bottom:10px;
-}
-h1 {
-  text-align: center;
-  font-weight: 100;
-  font-size: 24px;
-  text-transform: uppercase;
-  letter-spacing: 5px;
-  padding-top: 50px;
 }
 
-span.psw {
-  float: right;
-  padding-top: 16px;
+
+input[type=password]:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px blue;
 }
 
-/* The Modal (background) */
+
+
+.btn-login {
+  font-size: 20px;
+  text-align: center;
+  color: white;
+  margin: 20px;
+  padding: 5px;
+  border-radius: 30px;
+  width: 80%;
+  border: 0px;
+  background: linear-gradient(#e66465, #b0b5f0);
+}
+
+.btn-login:hover {
+  opacity: 0.8;
+}
+
+.btn-login:focus{
+  outline: none;
+  box-shadow: 0px 0px 2px blue;
+}
+
+.container {
+  padding: 40px;
+  text-align: center;
+  border-radius: 30px 30px 0px 0px;
+}
+
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  width: 100%; 
+  height: 100%; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
   padding-top: 60px;
+    
 }
 
-/* Modal Content/Box */
-.m-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
 
-  width: 700px;
-  height: 350px; /* Could be more or less, depending on screen size */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; 
+  border: 1px;
+  width: 50%; 
+  border-radius: 30px;
 }
 
 /* The Close Button (x) */
@@ -181,41 +185,76 @@ span.psw {
   font-size: 35px;
   font-weight: bold;
 }
-.close:hover,
-.close:focus {
-  color: red;
-  cursor: pointer;
-}
+
+
 
 /* Add Zoom Animation */
 .animate {
   -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
 }
 
 @-webkit-keyframes animatezoom {
-  from {
-    -webkit-transform: scale(0);
-  }
-  to {
-    -webkit-transform: scale(1);
-  }
+   from {-webkit-transform: scale(0)} 
+   to {-webkit-transform: scale(1)}
 }
-
+    
 @keyframes animatezoom {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
 }
 
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
-  span.psw {
-    display: block;
-    float: none;
-  }
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
 }
+
+.button {
+  display: inline-block;
+  border-radius:10px;
+  background-color: #dfcfd7;
+  border: none;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  font-size: 15px;
+  padding: 0px;
+  width: 90px;
+  height: 30px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-top: 10px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
 </style>

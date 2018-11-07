@@ -6,6 +6,7 @@ export default {
     this.renderChart({
       labels: this.data.labels,
       datasets: this.data.datasets,
+      backgroundColor: ['#C28535', '#8AAE56', '#B66C46']
     })
   }
 }
