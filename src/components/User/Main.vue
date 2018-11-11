@@ -55,8 +55,8 @@ export default {
         }
     },
     created(){
-
-        db.collection('blogs').get().then(snapshot => {
+       let ref = db.collection('blogs').orderBy("time");
+       ref.get().then(snapshot => {
             snapshot.forEach(doc => {
                 console.log(doc.data())
                 let blog = doc.data()

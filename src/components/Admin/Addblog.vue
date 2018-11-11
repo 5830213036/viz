@@ -14,15 +14,13 @@
                 </b-navbar-nav>
             </b-collapse>
     </b-navbar>
-
+<!-- Start Create blog -->
     <b-card class="card">
       <h2 class="mb-4">Create a New Blog</h2>
         <vue-good-wizard 
             :steps="steps"
             :onNext="nextClicked" 
             :onBack="backClicked">
-
-
         <div slot="page1">
             <!-- image -->
             <div class="mt-3">  
@@ -57,8 +55,7 @@
           <!-- chart -->
           <div>
             <h3>Import Your Data</h3>            
-            <vue-xlsx-table @on-select-file="handleSelectedFile" > Import Your Data </vue-xlsx-table>  
-        
+            <vue-xlsx-table @on-select-file="handleSelectedFile">Import Your Data</vue-xlsx-table>  
             <b-modal  v-model="modalShow" v-if="xlsdata" size="lg" title="If all right" @ok="handleOk">
               <div class="table-responsive">           
               <table  class="table table-bordered">
@@ -91,11 +88,8 @@
                 </tbody>
               </table>
               </div>
-
-
+        <section>   
         <b-form-group class="mt-3" label="Select a Chart"></b-form-group> 
-
-          <section>
             <div >
               <b-row class="row-chart">
               <!-- <b-card-group> -->
@@ -162,14 +156,15 @@
               </b-row>
             </div>
           </section>
-
-          <div class="small">
-            <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-            <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-            <pie v-if="selected =='pie'" :data="graphdata" ></pie>
-            <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
-            <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
-          </div>
+          <section>
+            <div class="small">
+              <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
+              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
+              <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
+             <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
+            </div>
+        </section>  
         </div>
       </div>
     </div>

@@ -31,9 +31,6 @@
                     <img   src="../../assets/edit.png" width="25" height="25"/>
                 </router-link>
             </div>
-
-            
-          
             <b-media no-body>
                 <b-media-aside vertical-align="center">
                     <img  blank blank-color="#ccc" width="450"  height="300" alt="placeholder" :src="blog.imagepreview"/>

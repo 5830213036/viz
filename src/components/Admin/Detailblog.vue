@@ -45,6 +45,8 @@ import HorizontalBar from "../Chart/HorizontalChart.js";
 import Admin from "../Admin/Admin.vue";
 //Other
 import Footer from "../Other/Footer.vue";
+import moment from "moment";
+
 export default {
   name: "Detailblog",
   components: {

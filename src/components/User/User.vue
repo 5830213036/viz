@@ -10,9 +10,9 @@
            <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav class="ml-auto">
                     <b-nav-form>
-                        <b-button size="sm" class="button" onclick="document.getElementById('signin').style.display='block'"><span>Sign In</span></b-button>
-
-
+                        <b-button size="sm" class="button" onclick="document.getElementById('signin').style.display='block'">
+                          <span>Sign In</span>
+                        </b-button>
                         <!-- The Modal -->
                         <div id="signin" class="modal">  
                           <form class="modal-content animate" >
@@ -28,7 +28,7 @@
                               <label class="label"><b>Password</b></label>
                               <input type="password" placeholder="Your Password"  v-model="formData.password" required>
     
-                              <button class="btn-login" value="Sign In"  @click="signIn()"><b>SIGN IN</b></button>    
+                              <button class="btn-login"  @click="signIn()"><b>SIGN IN</b></button>    
                             </div>      
                           </form>
                         </div>
@@ -36,13 +36,42 @@
                 </b-navbar-nav>
               </b-collapse>
             </b-navbar>
-
-
         <!-- Image -->
-             <div>
+             <!-- <div>
                 <b-img :src="image" fluid-grow height="500" width="500"/> 
-        <!-- fluid-grow -->
-            </div>
+            </div> -->
+
+  <div>
+    <b-carousel id="carousel1"
+                style="text-shadow: 1px 1px 2px #333;"
+                controls
+                indicators
+                :interval="3000"
+                img-width="1200"
+                img-height="480"
+                v-model="slide"
+                @sliding-start="onSlideStart"
+                @sliding-end="onSlideEnd"
+                :loop="true"
+    >
+
+      <b-carousel-slide :img-src="require('@/assets/o-19.jpg')" height="480" width="1200"></b-carousel-slide>
+
+      <!-- Text slides with image -->
+      <b-carousel-slide  text="Nulla vitae elit libero, a pharetra augue mollis interdum."
+                        :img-src="require('@/assets/o-19.jpg')"
+      ></b-carousel-slide>
+
+      <!-- Slides with custom text -->
+      <b-carousel-slide :img-src="require('@/assets/o-19.jpg')">
+        <!-- <h1>Hello world!</h1> -->
+      </b-carousel-slide>
+
+      <!-- Slides with image only -->
+      <b-carousel-slide :img-src="require('@/assets/o-19.jpg')"></b-carousel-slide>     
+
+    </b-carousel>
+  </div>
 
     </div>
 </template>
@@ -56,11 +85,13 @@ export default {
   components: { Footer },
   data() {
     return {
-      image: require("@/assets/PTEIHEAD.png"),
+      //image: require("@/assets/o-19.jpg"),
       formData: {
         email: "",
         password: ""
-      }
+      },
+      slide: 0,
+      sliding: null
     };
   },
   methods: {
@@ -68,63 +99,62 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.formData.email, this.formData.password)
-        .then(user => {
-          // Do Something After Sign in
-          //console.log(user)
+        .then(()=> {
           this.$router.push("Overviews");
         })
         .catch(e => {
           alert(e.message);
         });
+    },
+    onSlideStart (slide) {
+      this.sliding = true
+    },
+    onSlideEnd (slide) {
+      this.sliding = false
     }
   }
 };
 </script>
 
 <style scoped>
-
-.navbar {    
+.navbar {
   background: linear-gradient(#e66465, #b0b5f0);
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
   width: 100%;
-   
 }
 
-input[type=text], input[type=password] {
+input[type="text"],
+input[type="password"] {
   width: 80%;
   padding: 5px 30px;
-  margin:10px;
+  margin: 10px;
   display: inline-block;
   border: 1px solid #ccc;
   box-sizing: border-box;
   border-radius: 30px;
-        
 }
 
-input[type=text]:focus {
+input[type="text"]:focus {
   outline: none;
   box-shadow: 0px 0px 2px blue;
 }
 
 .label {
-  justify-content:left;
-  margin-left: 80px
+  justify-content: left;
+  margin-left: 80px;
 }
 
-.total{
+.total {
   font-size: 25px;
   color: white;
 }
 
-
-input[type=password]:focus {
+input[type="password"]:focus {
   outline: none;
   box-shadow: 0px 0px 2px blue;
 }
-
-
 
 .btn-login {
   font-size: 20px;
@@ -142,7 +172,7 @@ input[type=password]:focus {
   opacity: 0.8;
 }
 
-.btn-login:focus{
+.btn-login:focus {
   outline: none;
   box-shadow: 0px 0px 2px blue;
 }
@@ -154,25 +184,23 @@ input[type=password]:focus {
 }
 
 .modal {
-  display: none; 
-  position: fixed; 
+  display: none;
+  position: fixed;
   z-index: 1;
   left: 0;
   top: 0;
-  width: 100%; 
-  height: 100%; 
-  background-color: rgb(0,0,0); 
-  background-color: rgba(0,0,0,0.4); 
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
   padding-top: 60px;
-    
 }
-
 
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto 15% auto; 
+  margin: 5% auto 15% auto;
   border: 1px;
-  width: 50%; 
+  width: 50%;
   border-radius: 30px;
 }
 
@@ -186,38 +214,44 @@ input[type=password]:focus {
   font-weight: bold;
 }
 
-
-
 /* Add Zoom Animation */
 .animate {
   -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s
+  animation: animatezoom 0.6s;
 }
 
 @-webkit-keyframes animatezoom {
-   from {-webkit-transform: scale(0)} 
-   to {-webkit-transform: scale(1)}
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
 }
-    
+
 @keyframes animatezoom {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* Change styles for span and cancel button on extra small screens */
 @media screen and (max-width: 300px) {
-    span.psw {
-       display: block;
-       float: none;
-    }
-    .cancelbtn {
-       width: 100%;
-    }
+  span.psw {
+    display: block;
+    float: none;
+  }
+  .cancelbtn {
+    width: 100%;
+  }
 }
 
 .button {
   display: inline-block;
-  border-radius:10px;
+  border-radius: 10px;
   background-color: #dfcfd7;
   border: none;
   color: rgb(255, 255, 255);
@@ -240,7 +274,7 @@ input[type=password]:focus {
 }
 
 .button span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -256,5 +290,4 @@ input[type=password]:focus {
   opacity: 1;
   right: 0;
 }
-
 </style>

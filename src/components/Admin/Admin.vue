@@ -29,7 +29,7 @@ export default {
     name : 'Admin',
     data(){
         return {
-            image: require('@/assets/PTEIHEAD.png'),
+            image: require('@/assets/o-19.jpg'),
             formData:{
                     email:'',
                     password:''
