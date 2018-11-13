@@ -21,7 +21,7 @@
                             <h4 class="mt-0 mb-1">{{blog.title}}</h4>
                           
                             <div>           
-                                <router-link :to="{name : 'Readmore', params: {detail_slug : blog.slug}}">
+                                <router-link :to="{name : 'Readmore', params: {read_slug : blog.slug}}">
                                     <button size="sm" class="button" style="vertical-align:middle" type="submit" ><span>Read More</span></button>
                                 </router-link>
                             </div>

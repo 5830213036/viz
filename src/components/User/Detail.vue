@@ -7,7 +7,8 @@
 				<input type="file" class="form-control" id="file" :accept="SheetJSFT" @change="_change" />
 			</div>
 		</form>
-	</div></div>
+	</div>
+</div>
 	<div class="row"><div class="col-xs-12">
 		<button :disabled="data.length ? false : true" class="btn btn-success" @click="_export">Export</button>
 	</div></div>
@@ -50,12 +51,12 @@ export default {
 			SheetJSFT: _SheetJSFT
 	}; },
 	methods: {
-		_suppress(evt) { evt.stopPropagation(); evt.preventDefault(); },
-		_drop(evt) {
-			evt.stopPropagation(); evt.preventDefault();
-			const files = evt.dataTransfer.files;
-			if(files && files[0]) this._file(files[0]);
-		},
+		// _suppress(evt) { evt.stopPropagation(); evt.preventDefault(); },
+		// _drop(evt) {
+		// 	evt.stopPropagation(); evt.preventDefault();
+		// 	const files = evt.dataTransfer.files;
+		// 	if(files && files[0]) this._file(files[0]);
+		// },
 		_change(evt) {
 			const files = evt.target.files;
 			if(files && files[0]) this._file(files[0]);

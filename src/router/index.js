@@ -65,7 +65,7 @@ export default new Router({
       component: Overviews
     },
     {
-      path: '/Readmore',
+      path: '/Readmore/:read_slug',
       name: 'Readmore',
       component: Readmore
     }

@@ -88,7 +88,12 @@
                 </tbody>
               </table>
               </div>
-        <section>   
+        <section>
+          <section>
+            <div>
+              
+            </div>
+          </section>   
         <b-form-group class="mt-3" label="Select a Chart"></b-form-group> 
             <div >
               <b-row class="row-chart">

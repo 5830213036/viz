@@ -5,17 +5,14 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueCharts from 'vue-chartjs'
-import JsonExcel from 'vue-json-excel'
+
 import vUploader from 'v-uploader'
 //Xlsx
 import vueXlsxTable from 'vue-xlsx-table'
-
 import VueGoodWizard from 'vue-good-wizard'
 Vue.use(VueGoodWizard)
-
 import VueSwal from 'vue-swal'
 Vue.use(VueSwal)
-
 Vue.use(require('vue-moment'));
 var SocialSharing = require('vue-social-sharing');
 Vue.use(SocialSharing);
@@ -24,6 +21,9 @@ Vue.component('paginate', Paginate)
 Vue.use(vueXlsxTable)
 Vue.use(BootstrapVue, VueCharts)
 Vue.use(vUploader, uploaderConfig);
+
+// 12/11/2018 npm install vue-json-excel
+import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 
 Vue.config.productionTip = false

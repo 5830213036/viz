@@ -18,8 +18,6 @@
                   {{blog.description}}
                 </h5>
               </div>
-              
-
          <!-- {{blog.selected}} -->
               <div class="small">
                 <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
@@ -30,40 +28,73 @@
               </div>
             </b-media-body>
           </b-media>
+         <!-- 12/11/2018 -->
+        <section>
+         <div class="table-responsive">   
+            <table  class="table table-bordered">
+              <thead >
+                <tr>
+                 
+                  <th v-for="label in blog.graphdata.labels" :key="label.blog">{{label}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                    <tr v-for="body in blog.graphdata.datasets" :key="body.id">
+                        <td v-for="dataset in body.data" :key="dataset.blog">{{dataset}}</td>
+                    </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section>
+          <div>
+            <button class="btn btn-success" v-on:click="_export()">Export</button>
+          </div>
+        </section>
         </b-card>
-   
     </div>
 </template>
 
 <script>
+import XLSX from 'xlsx';
+// const make_cols = refstr => Array(XLSX.utils.decode_range(refstr).e.c + 1).fill(0).map((x,i) => ({name:XLSX.utils.encode_col(i), key:i}));
+const _SheetJSFT = [
+	"xlsx", "xlsb", "xlsm", "xls", "xml", "csv", "txt", "ods", "fods", "uos", "sylk", "dif", "dbf", "prn", "qpw", "123", "wb*", "wq*", "html", "htm"
+].map(function(x) { return "." + x; }).join(",");
+
 import db from "@/firebase/init";
 import bargroup from "../Chart/BarChartGroup.js";
 import LineChart from "../Chart/LineChart.js";
 import Doughnut from "../Chart/DoughnutChart.js";
 import Pie from "../Chart/PieChart.js";
 import HorizontalBar from "../Chart/HorizontalChart.js";
-//User  
-import User from '../User/User.vue'
+//User
+import User from "../User/User.vue";
 //Other
-import Footer from '../Other/Footer.vue'
+import Footer from "../Other/Footer.vue";
 export default {
   name: "Readmore",
-  components: { bargroup, LineChart, Doughnut, Pie, HorizontalBar, User ,Footer},
-
+  components: {
+    bargroup,
+    LineChart,
+    Doughnut,
+    Pie,
+    HorizontalBar,
+    User,
+    Footer
+  },
   data() {
     return {
-      image: require('@/assets/PTEIHEAD.png'),
+      image: require("@/assets/PTEIHEAD.png"),
       blog: [],
-      graphdata: {
-        labels: [],
-        datasets: []
-      }
+      
+      SheetJSFT: _SheetJSFT,
     };
   },
   created() {
     let ref = db
       .collection("blogs")
-      .where("slug", "==", this.$route.params.detail_slug);
+      .where("slug", "==", this.$route.params.read_slug);
     ref.get().then(snapshot => {
       snapshot.forEach(doc => {
         // console.log(doc.data())
@@ -71,7 +102,25 @@ export default {
         this.blog.id = doc.id;
       });
     });
-  }
+  },
+ methods : {
+
+   _export(){
+     
+    var arrObject = []
+    arrObject.push(this.blog.graphdata.labels)
+    for(var i=0;i<this.blog.graphdata.datasets.length;i++){
+      arrObject.push(this.blog.graphdata.datasets[i]['data'])
+    }
+    console.log(arrObject)
+			const ws = XLSX.utils.aoa_to_sheet(arrObject);
+			const wb = XLSX.utils.book_new();
+			XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+			/* generate file and send to client */
+      XLSX.writeFile(wb, this.blog.title + ".xlsx");
+     
+   }
+ }
 };
 </script>
 
@@ -96,25 +145,20 @@ export default {
   margin-top: 30px;
   margin-right: 100px;
   margin-left: 100px;
-  
 }
 
 .post-meta {
   color: #212529;
   font-weight: 300;
-  font-family: 'Lora', 'Times New Roman', serif;
+  font-family: "Lora", "Times New Roman", serif;
   font-size: 15px;
-
 }
 
 .des {
   text-align: justify;
   text-indent: 50px;
-  line-height : normal;
+  line-height: normal;
   margin-left: 80px;
   margin-right: 80px;
-
 }
-
-
 </style>
