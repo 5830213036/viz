@@ -118,7 +118,7 @@
                   </label>
                 </div> 
 
-                <div class="col-4">
+                <!-- <div class="col-4">
                   <input type="radio" id="doughnut" value="doughnut" v-model="selected">
                   <label for="doughnut">
                     <b-card class="box"> 
@@ -126,9 +126,9 @@
                       <p>Doughnut Chart</p>
                     </b-card>
                   </label>
-                </div>
+                </div> -->
 
-                <div class="col-4">
+                <!-- <div class="col-4">
                   <input type="radio" id="pie" value="pie" v-model="selected">
                   <label for="pie">
                     <b-card class="box"> 
@@ -136,7 +136,7 @@
                       <p>Pie Chart</p>
                     </b-card>
                   </label>
-                </div>
+                </div> -->
 
                 <div class="col-4">
                   <input type="radio" id="horizontal" value="horizontal" v-model="selected">
@@ -164,8 +164,8 @@
           <section>
             <div class="small">
               <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
+              <!-- <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+              <pie v-if="selected =='pie'" :data="graphdata" ></pie> -->
               <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
              <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
             </div>
@@ -184,10 +184,12 @@
           </section>
             {{description}}
 
+
+
             <div class="small">
               <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
+              <!-- <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+              <pie v-if="selected =='pie'" :data="graphdata" ></pie> -->
               <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
               <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>
             </div>    
@@ -214,6 +216,7 @@ import Doughnut from "../Chart/DoughnutChart.js";
 import Pie from "../Chart/PieChart.js";
 import HorizontalBar from "../Chart/HorizontalChart.js";
 import moment from "moment";
+
 
 export default {
   name: "Addblog",
@@ -408,7 +411,7 @@ export default {
 <style scoped>
 
 .navbar {    
-  background: linear-gradient(#e66465, #b0b5f0);
+  background: linear-gradient(#0bc0b1 20%, #eaeaec );
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
@@ -449,7 +452,6 @@ export default {
   
 }
 
-
 .container {
   text-align: left;
   padding: 40px;
@@ -474,9 +476,9 @@ export default {
 .button {
   display: inline-block;
   border-radius:10px;
-  background-color: #dfcfd7;
+  background-color: #faf9f9;
+  color: rgb(41, 39, 39);
   border: none;
-  color: rgb(255, 255, 255);
   text-align: center;
   font-size: 15px;
   padding: 0px;
@@ -519,11 +521,7 @@ export default {
   
 }
 
-.table {
-  font-size: 15px;
-  margin-left: 10px auto;
-  margin-right: auto;
-}
+
 
 
 </style>

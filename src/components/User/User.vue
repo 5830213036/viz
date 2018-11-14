@@ -10,12 +10,15 @@
            <b-collapse is-nav id="nav_collapse">
                 <b-navbar-nav class="ml-auto">
                     <b-nav-form>
-                        <b-button size="sm" class="button" onclick="document.getElementById('signin').style.display='block'">
-                          <span>Sign In</span>
-                        </b-button>
+                        <!-- <b-button size="sm" class="button" onclick="document.getElementById('signin').style.display='block'"> -->
+                        <router-link :to="{ name : 'Signin'}">
+                          <b-button size="sm" class="button">
+                            <span>Sign In</span>
+                          </b-button>
+                        </router-link>
                         <!-- The Modal -->
-                        <div id="signin" class="modal">  
-                          <form class="modal-content animate" >
+                        <!-- <div id="signin" class="modal">  
+                          <div class="modal-content animate" >
                             <div class="container" style="background:linear-gradient(#e66465, #9198e5)">
                               <span onclick="document.getElementById('signin').style.display='none'" class="close" title="Close Modal">&times;</span>
                               <b class="total">Admin Sign In</b>
@@ -28,10 +31,10 @@
                               <label class="label"><b>Password</b></label>
                               <input type="password" placeholder="Your Password"  v-model="formData.password" required>
     
-                              <button class="btn-login"  @click="signIn()"><b>SIGN IN</b></button>    
+                              <button class="btn-login"><b>SIGN IN</b></button>    
                             </div>      
-                          </form>
-                        </div>
+                          </div>
+                        </div> -->
                     </b-nav-form>
                 </b-navbar-nav>
               </b-collapse>
@@ -46,29 +49,24 @@
                 style="text-shadow: 1px 1px 2px #333;"
                 controls
                 indicators
-                :interval="3000"
-                img-width="1200"
-                img-height="480"
+                :interval="2000"                
                 v-model="slide"
                 @sliding-start="onSlideStart"
                 @sliding-end="onSlideEnd"
                 :loop="true"
     >
 
-      <b-carousel-slide :img-src="require('@/assets/o-19.jpg')" height="480" width="1200"></b-carousel-slide>
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/pt2.jpg')" fluid-grow ></b-carousel-slide>
 
       <!-- Text slides with image -->
-      <b-carousel-slide  text="Nulla vitae elit libero, a pharetra augue mollis interdum."
-                        :img-src="require('@/assets/o-19.jpg')"
-      ></b-carousel-slide>
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/ladyai2.jpg')" fluid-grow ></b-carousel-slide>
 
       <!-- Slides with custom text -->
-      <b-carousel-slide :img-src="require('@/assets/o-19.jpg')">
-        <!-- <h1>Hello world!</h1> -->
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/oldtown.jpg')" fluid-grow>     
       </b-carousel-slide>
 
       <!-- Slides with image only -->
-      <b-carousel-slide :img-src="require('@/assets/o-19.jpg')"></b-carousel-slide>     
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/PTEIHEAD.png')" fluid-grow ></b-carousel-slide>     
 
     </b-carousel>
   </div>
@@ -95,22 +93,40 @@ export default {
     };
   },
   methods: {
-    signIn() {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.formData.email, this.formData.password)
-        .then(()=> {
-          this.$router.push("Overviews");
-        })
-        .catch(e => {
-          alert(e.message);
-        });
+    // signIn() {
+    //   alert(this.formData.email, this.formData.password)
+      // firebase
+      //   .auth()
+      //   .signInWithEmailAndPassword(this.formData.email, this.formData.password)
+      //   .then(() => {
+          
+      //   })
+      //   .catch(e => {
+      //     alert(e.message);
+      //   });
+      // firebase.auth().onAuthStateChanged(function(user) {
+      //   if (user) {
+      //     // User is signed in.
+      //     var displayName = user.displayName;
+      //     var email = user.email;
+      //     var emailVerified = user.emailVerified;
+      //     var photoURL = user.photoURL;
+      //     var isAnonymous = user.isAnonymous;
+      //     var uid = user.uid;
+      //     var providerData = user.providerData;
+      //     this.$router.push("Overviews");
+      //   } else {
+      //     // User is signed out.
+      //     // ...
+      //   }
+      // });
+    // },
+
+    onSlideStart(slide) {
+      this.sliding = true;
     },
-    onSlideStart (slide) {
-      this.sliding = true
-    },
-    onSlideEnd (slide) {
-      this.sliding = false
+    onSlideEnd(slide) {
+      this.sliding = false;
     }
   }
 };
@@ -118,143 +134,21 @@ export default {
 
 <style scoped>
 .navbar {
-  background: linear-gradient(#e66465, #b0b5f0);
+  background: linear-gradient(#0bc0b1 20%, #eaeaec );
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
   width: 100%;
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 80%;
-  padding: 5px 30px;
-  margin: 10px;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  border-radius: 30px;
-}
 
-input[type="text"]:focus {
-  outline: none;
-  box-shadow: 0px 0px 2px blue;
-}
-
-.label {
-  justify-content: left;
-  margin-left: 80px;
-}
-
-.total {
-  font-size: 25px;
-  color: white;
-}
-
-input[type="password"]:focus {
-  outline: none;
-  box-shadow: 0px 0px 2px blue;
-}
-
-.btn-login {
-  font-size: 20px;
-  text-align: center;
-  color: white;
-  margin: 20px;
-  padding: 5px;
-  border-radius: 30px;
-  width: 80%;
-  border: 0px;
-  background: linear-gradient(#e66465, #b0b5f0);
-}
-
-.btn-login:hover {
-  opacity: 0.8;
-}
-
-.btn-login:focus {
-  outline: none;
-  box-shadow: 0px 0px 2px blue;
-}
-
-.container {
-  padding: 40px;
-  text-align: center;
-  border-radius: 30px 30px 0px 0px;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgb(0, 0, 0);
-  background-color: rgba(0, 0, 0, 0.4);
-  padding-top: 60px;
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto;
-  border: 1px;
-  width: 50%;
-  border-radius: 30px;
-}
-
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-
-/* Add Zoom Animation */
-.animate {
-  -webkit-animation: animatezoom 0.6s;
-  animation: animatezoom 0.6s;
-}
-
-@-webkit-keyframes animatezoom {
-  from {
-    -webkit-transform: scale(0);
-  }
-  to {
-    -webkit-transform: scale(1);
-  }
-}
-
-@keyframes animatezoom {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-  span.psw {
-    display: block;
-    float: none;
-  }
-  .cancelbtn {
-    width: 100%;
-  }
-}
 
 .button {
   display: inline-block;
   border-radius: 10px;
-  background-color: #dfcfd7;
+  background-color: #faf9f9;
   border: none;
-  color: rgb(255, 255, 255);
+  color: rgb(41, 39, 39);
   text-align: center;
   font-size: 15px;
   padding: 0px;
@@ -290,4 +184,10 @@ input[type="password"]:focus {
   opacity: 1;
   right: 0;
 }
+
+.img-fluid {
+  width: 100%;
+  height: 500px;
+}
+   
 </style>

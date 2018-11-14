@@ -123,7 +123,7 @@ input[type=text]:focus {
 .button {
   display: inline-block;
   border-radius: 50px;
-  background: linear-gradient(#db4bc8, #9198e0);
+  background: linear-gradient(#0bc0b1);
   /* background-color: #df75a6; */
   border: none;
   color: rgb(255, 255, 255);

@@ -16,9 +16,35 @@
             </b-collapse>
     </b-navbar>
     <!-- Image -->
-    <div>
+    <!-- <div>
         <b-img :src="image" fluid-grow   alt="Responsive image" />
-    </div>
+    </div> -->
+<div>
+    <b-carousel id="carousel1"
+                style="text-shadow: 1px 1px 2px #333;"
+                controls
+                indicators
+                :interval="2000"                
+                v-model="slide"
+                @sliding-start="onSlideStart"
+                @sliding-end="onSlideEnd"
+                :loop="true"
+    >
+
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/pt2.jpg')" fluid-grow ></b-carousel-slide>
+
+      <!-- Text slides with image -->
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/ladyai2.jpg')" fluid-grow ></b-carousel-slide>
+
+      <!-- Slides with custom text -->
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/oldtown.jpg')" fluid-grow>     
+      </b-carousel-slide>
+
+      <!-- Slides with image only -->
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/PTEIHEAD.png')" fluid-grow ></b-carousel-slide>     
+
+    </b-carousel>
+  </div>
 
     </div>
 </template>
@@ -33,13 +59,21 @@ export default {
             formData:{
                     email:'',
                     password:''
-                }
+                },
+            slide: 0,
+            sliding: null
         }
     },
         methods : {
             signout(){
                   this.$router.push('/')   
                   console.log('signOut')               
+    },
+    onSlideStart(slide) {
+      this.sliding = true;
+    },
+    onSlideEnd(slide) {
+      this.sliding = false;
     }
 }
 }
@@ -48,7 +82,7 @@ export default {
 <style scoped>
 
 .navbar {    
-  background: linear-gradient(#e66465, #b0b5f0);
+  background: linear-gradient(#0bc0b1 20%, #eaeaec );
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
@@ -61,9 +95,9 @@ export default {
 .button {
   display: inline-block;
   border-radius:10px;
-  background-color: #dfcfd7;
+  background-color: #faf9f9;
+  color: rgb(41, 39, 39);
   border: none;
-  color: rgb(255, 255, 255);
   text-align: center;
   font-size: 15px;
   padding: 0px;
@@ -98,6 +132,11 @@ export default {
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+.img-fluid {
+  width: 100%;
+  height: 500px;
 }
 
 </style>

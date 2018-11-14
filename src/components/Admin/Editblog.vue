@@ -128,14 +128,15 @@
         {{blog.description}}
       </h5>
     </div>
-
     <div class="small">
-        <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
-        <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
-        <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
-        <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
-        <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
-    </div>    
+      <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
+      <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
+      <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
+      <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
+      <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
+    </div>
+    
+   
   <!-- submit -->
       <!-- <div class="add">
         <b-button variant="success" v-model="time" v-on:click="Addblog()" >Confirm</b-button>
@@ -168,9 +169,10 @@ import HorizontalBar from "../Chart/HorizontalChart.js";
 import slugify from "slugify";
 import moment from "moment";
 
+
 export default {
   name: "Editblog",
-  components: { bargroup, LineChart, Doughnut, Pie, HorizontalBar },
+  components: { bargroup, LineChart, Doughnut, Pie, HorizontalBar},
   data() {
     return {
       blog: [],
@@ -310,7 +312,7 @@ export default {
 }
 
 .navbar {
-  background: linear-gradient(#e66465, #b0b5f0);
+  background: linear-gradient(#0bc0b1 20%, #eaeaec );
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
@@ -320,9 +322,9 @@ export default {
 .button {
   display: inline-block;
   border-radius: 10px;
-  background-color: #dfcfd7;
+  background-color: #faf9f9;
+  color: rgb(41, 39, 39);
   border: none;
-  color: rgb(255, 255, 255);
   text-align: center;
   font-size: 15px;
   padding: 0px;
@@ -411,5 +413,7 @@ export default {
   margin-right: 80px;
 
 }
+
+
 
 </style>

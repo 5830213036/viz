@@ -26,6 +26,11 @@ Vue.use(vUploader, uploaderConfig);
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 
+// 14//11/2015 npm install -S vue-carousel
+import VueCarousel from 'vue-carousel';
+Vue.use(VueCarousel);
+
+
 Vue.config.productionTip = false
 
 const uploaderConfig = {

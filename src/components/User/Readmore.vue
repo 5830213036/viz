@@ -1,13 +1,11 @@
 <template>
     <div>
       <!-- User -->
-      <User/>
-        
+      <User/>        
         <b-card class="card" v-if="blog" :key="blog.id">
           <div class="mb-3" >
             <img blank blank-color="#ccc" width="600" height="450" :src="blog.imagepreview"/>
           </div>
-
           <b-media>
             <b-media-body class="ml-3">
               <i class="post-meta">{{ blog.time}}</i>
@@ -17,50 +15,75 @@
                 <h5  class="des mt-3">
                   {{blog.description}}
                 </h5>
-              </div>
-         <!-- {{blog.selected}} -->
-              <div class="small">
-                <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
-                <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
-                <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
-                <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
-                <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
-              </div>
-            </b-media-body>
+              </div>                            
+            </b-media-body>            
           </b-media>
-         <!-- 12/11/2018 -->
-        <section>
-         <div class="table-responsive">   
-            <table  class="table table-bordered">
-              <thead >
-                <tr>
-                 
-                  <th v-for="label in blog.graphdata.labels" :key="label.blog">{{label}}</th>
-                </tr>
-              </thead>
-              <tbody>
-                    <tr v-for="body in blog.graphdata.datasets" :key="body.id">
+          <div class="export">
+            <b-button variant="outline-danger"  v-on:click="_export()">Export</b-button>
+          </div> 
+         
+          <div class="container-carousel">
+            <carousel :per-page="1" >
+              <slide>
+                <div class="small">
+                    <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
+                    <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
+                    <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
+                    <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
+                    <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
+                </div>
+              </slide>
+              <slide>    
+                <div class="table-responsive mt-5">   
+                  <table class="table table-bordered table-striped">
+                    <thead>
+                      <tr>
+                        <th v-for="label in blog.graphdata.labels" :key="label.blog">{{label}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="body in blog.graphdata.datasets" :key="body.id">
                         <td v-for="dataset in body.data" :key="dataset.blog">{{dataset}}</td>
-                    </tr>
-              </tbody>
-            </table>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div> 
+              </slide>
+            </carousel>
           </div>
-        </section>
-        <section>
-          <div>
-            <button class="btn btn-success" v-on:click="_export()">Export</button>
-          </div>
-        </section>
         </b-card>
     </div>
 </template>
 
 <script>
-import XLSX from 'xlsx';
+import XLSX from "xlsx";
 // const make_cols = refstr => Array(XLSX.utils.decode_range(refstr).e.c + 1).fill(0).map((x,i) => ({name:XLSX.utils.encode_col(i), key:i}));
 const _SheetJSFT = [
-	"xlsx", "xlsb", "xlsm", "xls", "xml", "csv", "txt", "ods", "fods", "uos", "sylk", "dif", "dbf", "prn", "qpw", "123", "wb*", "wq*", "html", "htm"
-].map(function(x) { return "." + x; }).join(",");
+  "xlsx",
+  "xlsb",
+  "xlsm",
+  "xls",
+  "xml",
+  "csv",
+  "txt",
+  "ods",
+  "fods",
+  "uos",
+  "sylk",
+  "dif",
+  "dbf",
+  "prn",
+  "qpw",
+  "123",
+  "wb*",
+  "wq*",
+  "html",
+  "htm"
+]
+  .map(function(x) {
+    return "." + x;
+  })
+  .join(",");
 
 import db from "@/firebase/init";
 import bargroup from "../Chart/BarChartGroup.js";
@@ -72,6 +95,8 @@ import HorizontalBar from "../Chart/HorizontalChart.js";
 import User from "../User/User.vue";
 //Other
 import Footer from "../Other/Footer.vue";
+import moment from "moment";
+import { Carousel, Slide } from 'vue-carousel';
 export default {
   name: "Readmore",
   components: {
@@ -81,13 +106,14 @@ export default {
     Pie,
     HorizontalBar,
     User,
-    Footer
+    Footer,
+    Carousel,
+    Slide    
   },
   data() {
     return {
       image: require("@/assets/PTEIHEAD.png"),
       blog: [],
-      
       SheetJSFT: _SheetJSFT,
     };
   },
@@ -103,24 +129,21 @@ export default {
       });
     });
   },
- methods : {
-
-   _export(){
-     
-    var arrObject = []
-    arrObject.push(this.blog.graphdata.labels)
-    for(var i=0;i<this.blog.graphdata.datasets.length;i++){
-      arrObject.push(this.blog.graphdata.datasets[i]['data'])
-    }
-    console.log(arrObject)
-			const ws = XLSX.utils.aoa_to_sheet(arrObject);
-			const wb = XLSX.utils.book_new();
-			XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-			/* generate file and send to client */
+  methods: {
+    _export() {
+      var arrObject = [];
+      arrObject.push(this.blog.graphdata.labels);
+      for (var i = 0; i < this.blog.graphdata.datasets.length; i++) {
+        arrObject.push(this.blog.graphdata.datasets[i]["data"]);
+      }
+      console.log(arrObject);
+      const ws = XLSX.utils.aoa_to_sheet(arrObject);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+      /* generate file and send to client */
       XLSX.writeFile(wb, this.blog.title + ".xlsx");
-     
-   }
- }
+    },
+  }
 };
 </script>
 
@@ -160,5 +183,32 @@ export default {
   line-height: normal;
   margin-left: 80px;
   margin-right: 80px;
+}
+
+.container-carousel {
+  text-align: center;
+  margin-top: -6%;
+  margin-bottom: 2%;
+}
+
+.table {
+  border-collapse: collapse;
+  font-size: 15px;
+  table-layout: fixed;
+  margin-top: 70px;
+  border-radius: 10%;
+}
+
+.export {
+  text-align: right;
+  margin-right: 50px;
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+}
+
+thead {
+  color: white;
+  background-color:rgba(199, 57, 123, 0.61);
 }
 </style>

@@ -13,7 +13,7 @@ import Test from '@/components/Admin/Test'
 import Editblog from '@/components/Admin/Editblog'
 import Detailblog from '@/components/Admin/Detailblog'
 import Addblog from '@/components/Admin/Addblog'
-// import Signin from '@/components/Admin/Signin'
+import Signin from '@/components/Admin/Signin'
 
 Vue.use(Router)
 
@@ -29,11 +29,11 @@ export default new Router({
       name: 'Addblog',
       component: Addblog
     },
-    // {
-    //   path: '/sign-in',
-    //   name: 'Signin',
-    //   component: Signin
-    // }
+    {
+      path: '/sign-in',
+      name: 'Signin',
+      component: Signin
+    },
     
     {
       path: '/detail',

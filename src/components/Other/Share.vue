@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      url: "https://vuejs.org/"
+      url: "https://viz-data.firebaseapp.com/#/"
     };
   }
 };
