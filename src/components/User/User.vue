@@ -55,15 +55,13 @@
                 @sliding-end="onSlideEnd"
                 :loop="true"
     >
-
-      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/pt2.jpg')" fluid-grow ></b-carousel-slide>
+      
 
       <!-- Text slides with image -->
       <b-carousel-slide class="img-fluid" :img-src="require('@/assets/ladyai2.jpg')" fluid-grow ></b-carousel-slide>
 
       <!-- Slides with custom text -->
-      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/oldtown.jpg')" fluid-grow>     
-      </b-carousel-slide>
+      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/oldtown.jpg')" fluid-grow></b-carousel-slide>
 
       <!-- Slides with image only -->
       <b-carousel-slide class="img-fluid" :img-src="require('@/assets/PTEIHEAD.png')" fluid-grow ></b-carousel-slide>     

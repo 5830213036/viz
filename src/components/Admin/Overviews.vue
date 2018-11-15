@@ -3,6 +3,14 @@
     <!-- Admin -->
     <Admin/>
 
+    <div class="topic">    
+        <h4 class="ptei"> PTEI Data Visualization </h4>
+        <hr>
+        <p class="thai">PTEI Data Visualization เป็นการนำเสนอข้อมูลเชิงภาพ (Data Visualization) 
+            ซึ่งข้อมูลจะถูกออกแบบผ่านรูปแบบแผนผัง เพื่อแสดงความสัมพันธ์ของข้อมูลในเชิงปริมาณให้ดูน่าสนใจ 
+            เข้าใจง่าย เห็นภาพรวมชัดเจน ง่ายต่อการจดจำ</p>    
+    </div>
+
     <!-- Search -->
     <section>
       <b-nav-form class="search">       
@@ -39,9 +47,11 @@
                         <b-media-body class="content">
                             <h4 class="mt-0 mb-1">{{blog.title}}</h4>
                             <!-- <i class="post-meta">{{ blog.time}}</i> -->
-                            <!-- <h6>
-                                {{blog.description}}
-                            </h6>        -->
+                            <h6>
+                                <!-- {{blog.description}} -->
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Nam laoreet, nunc et accumsan cursus, neque eros sodales lectus....
+                            </h6>       
                             <div>           
                                 <router-link :to="{name : 'Detailblog', params: {detail_slug : blog.slug}}">
                                     <button size="sm" class="button" style="vertical-align:middle" type="submit" ><span>Read More</span></button>
@@ -74,7 +84,7 @@ export default {
     };
   },
   created() {
-    let ref = db.collection("blogs").orderBy("time");
+    let ref = db.collection("blogs").orderBy("time","desc");
     ref.get().then(snapshot => {
       snapshot.forEach(doc => {
         console.log(doc.data());
@@ -122,6 +132,32 @@ export default {
 };
 </script>
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+@import url('https://fonts.googleapis.com/css?family=Kanit');
+
+.topic {
+    text-align: center;
+    margin-top: 5%;
+    margin-left: 13%;
+    margin-right: 13%;
+    margin-bottom: 5%;
+}
+
+.ptei {
+    font-family: 'Fredoka One', cursive;
+    color: rgb(10, 15, 13)
+}
+
+hr {
+    width: 10%;
+    height: 15%;
+    border: 1px solid rgb(41, 59, 224);
+}
+
+.thai {
+    font-size: 18px;
+    font-family: 'Kanit', sans-serif;
+}
 
 .search{
   margin: 20px;
@@ -246,9 +282,7 @@ input[type=text]:focus {
 
 .close {
   padding: 5px;  
-  
-  color: rgb(211, 27, 27);
-  
+  color: rgb(211, 27, 27); 
   opacity: .4;
 }
 

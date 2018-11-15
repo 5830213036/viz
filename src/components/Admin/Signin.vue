@@ -14,12 +14,12 @@
                 <div class="container">
                     
                     <!-- <label class="label"><b>Email</b></label>       -->
-                    <input type="text" placeholder="Your Email" >      
+                    <input type="text" placeholder="Your Email" v-model="formData.email" required>      
 
                     <!-- <label class="label"><b>Password</b></label> -->
-                    <input type="password" placeholder="Your Password"  >
+                    <input type="password" placeholder="Your Password" v-model="formData.password" required>
     
-                    <button class="btn-login"><b>SIGN IN</b></button>  
+                    <button class="btn-login"  v-on:click="signIn()"><b>SIGN IN</b></button>  
 
                      <router-link :to="{ name :'Main'}">                    
                         <a  class="previous round">Back to Home Page</a>                    
@@ -54,7 +54,7 @@ export default {
         .then(user => {
           // Do Something After Sign in
           //console.log(user)
-          this.$router.replace("/Overviews");
+          this.$router.push("Overviews");
         })
         .catch(e => {
           alert(e.message);

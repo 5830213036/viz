@@ -74,8 +74,8 @@
             </b-modal>   
 
             <div v-if="isdataOk">     
-              <div class="table-responsive">   
-              <table class="table table-bordered mt-3" >            
+              <div class="table-responsive  mt-5">   
+              <table class="table table-bordered table-striped" >            
                 <thead >
                   <tr>
                     <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
@@ -118,7 +118,7 @@
                   </label>
                 </div> 
 
-                <!-- <div class="col-4">
+                <div class="col-4">
                   <input type="radio" id="doughnut" value="doughnut" v-model="selected">
                   <label for="doughnut">
                     <b-card class="box"> 
@@ -126,9 +126,9 @@
                       <p>Doughnut Chart</p>
                     </b-card>
                   </label>
-                </div> -->
+                </div>
 
-                <!-- <div class="col-4">
+                <div class="col-4">
                   <input type="radio" id="pie" value="pie" v-model="selected">
                   <label for="pie">
                     <b-card class="box"> 
@@ -136,7 +136,7 @@
                       <p>Pie Chart</p>
                     </b-card>
                   </label>
-                </div> -->
+                </div>
 
                 <div class="col-4">
                   <input type="radio" id="horizontal" value="horizontal" v-model="selected">
@@ -148,7 +148,7 @@
                   </label>
                 </div>
 
-                <!-- <div class="col-4">
+                <div class="col-4">
                   <input type="radio" id="bubble" value="bubble" v-model="selected">
                   <label for="bubble">
                     <b-card class="box"> 
@@ -156,7 +156,7 @@
                       <p>Bubble Chart</p>
                     </b-card>
                   </label>
-                </div>  -->
+                </div> 
               <!-- </b-card-group> -->
               </b-row>
             </div>
@@ -164,8 +164,8 @@
           <section>
             <div class="small">
               <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-              <!-- <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-              <pie v-if="selected =='pie'" :data="graphdata" ></pie> -->
+              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
               <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
              <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
             </div>
@@ -176,20 +176,26 @@
 
         <div slot="page3"> 
           <section>
-            <img :src="imagepreview" class="preview-image" width="450"  height="300" v-on:click="openupload" alt="Responsive image" />
+            <div class="mb-3">
+              <img :src="imagepreview" class="preview-image" width="450"  height="300" v-on:click="openupload" alt="Responsive image" />
+            </div>
           </section>
-
-          <section>
-            {{title}}
-          </section>
-            {{description}}
-
-
+          <b-media>
+            <b-media-body class="ml-3">
+              <h3 class="mt-4">{{title}}</h3>
+              
+              <div class="row">
+                <h5  class="des mt-3">
+                  {{description}}
+                </h5>
+              </div>                            
+            </b-media-body>            
+          </b-media>
 
             <div class="small">
               <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-              <!-- <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-              <pie v-if="selected =='pie'" :data="graphdata" ></pie> -->
+              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
               <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
               <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>
             </div>    
@@ -224,9 +230,9 @@ export default {
 
   data() {
     return {
-      time: moment().format("MM/DD/YYYY hh:mm"),
+      time: moment().format("MM/DD/YYYY hh:mm:ss"),
       imagepreview: require("../../assets/Upload.png"),
-      file: null,
+      file: true,
       description: null,
       slug: null,
       title: null,
@@ -334,17 +340,40 @@ export default {
         let dataset = {
           label: [],
           data: [],
-          fill: false,
+          fill: true,
           borderColor: [],
-          backgroundColor: []
+          backgroundColor: [this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),          
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),          
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
+          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),]
         };
+        
         for (let item in body) {
           if (item == "Title") {
             dataset.label = body[item];
-            dataset.backgroundColor = this.getcolors();
+            // dataset.backgroundColor = [{
+            //   if (backgroundColor = 0) {
+            //     this.getcolors()
+            //   }
+            // }]
             dataset.borderColor = this.getcolors();
           } else {
             dataset.data.push(body[item]);
+            
           }
         }
         this.graphdata.datasets.push(dataset);
@@ -435,6 +464,7 @@ export default {
 .small {
   max-width: 600px;
   margin: 100px auto;
+  margin-top: 4%;
 }
 
 .input {
@@ -465,6 +495,13 @@ export default {
   margin: 10px;
 }
 
+.des {
+  text-align: justify;
+  text-indent: 50px;
+  line-height: normal;
+  margin-left: 80px;
+  margin-right: 80px;
+}
 
 
 .radio-component {

@@ -97,6 +97,15 @@
                                 </b-card>
                             </label>
                     </div>
+                    <div class="col-4">
+                      <input type="radio" id="bubble" value="bubble" v-model="selected">
+                        <label for="bubble">
+                          <b-card class="box"> 
+                            <img src="../../assets/bubble.png" width="80"/>
+                            <p>Bubble Chart</p>
+                          </b-card>
+                        </label>
+                    </div> 
                 </b-row>
             </div>
     </section>
@@ -169,10 +178,9 @@ import HorizontalBar from "../Chart/HorizontalChart.js";
 import slugify from "slugify";
 import moment from "moment";
 
-
 export default {
   name: "Editblog",
-  components: { bargroup, LineChart, Doughnut, Pie, HorizontalBar},
+  components: { bargroup, LineChart, Doughnut, Pie, HorizontalBar },
   data() {
     return {
       blog: [],
@@ -312,7 +320,7 @@ export default {
 }
 
 .navbar {
-  background: linear-gradient(#0bc0b1 20%, #eaeaec );
+  background: linear-gradient(#0bc0b1 20%, #eaeaec);
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
@@ -372,7 +380,6 @@ export default {
   border-radius: 20px;
   padding: 5px 20px;
   margin: auto;
-  
 }
 
 .container {
@@ -401,19 +408,15 @@ export default {
 .post-meta {
   color: #212529;
   font-weight: 300;
-  font-family: 'Lora', 'Times New Roman', serif;
+  font-family: "Lora", "Times New Roman", serif;
   font-size: 15px;
 }
 
 .des {
   text-align: justify;
   text-indent: 50px;
-  line-height : normal;
+  line-height: normal;
   margin-left: 80px;
   margin-right: 80px;
-
 }
-
-
-
 </style>

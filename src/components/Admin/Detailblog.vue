@@ -179,6 +179,7 @@ export default {
 .small {
   max-width: 600px;
   margin: 100px auto;
+  margin-top: 4%;
 }
 
 .post-meta {
@@ -203,12 +204,12 @@ export default {
   margin-bottom: 2%;
 }
 
-.table {
+.table-responsive {
   border-collapse: collapse;
   font-size: 15px;
   table-layout: fixed;
-  margin-top: 70px;
-  border-radius: 10%;
+  margin-top: 10px;
+  
 }
 
 .export {
