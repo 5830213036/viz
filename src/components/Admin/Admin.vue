@@ -1,72 +1,70 @@
 <template>
-    <div>
+  <div>
     <!-- Navbar -->
-    <b-navbar toggleable="md" type="dark"  class="navbar">
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-            <router-link :to="{ name :'Overviews'}">
-                <b-navbar-brand>PTEI Visualization</b-navbar-brand>
-            </router-link>
-            <!-- Right aligned nav items -->
-            <b-collapse is-nav id="nav_collapse">
-                <b-navbar-nav class="ml-auto">
-                    <b-nav-form>
-                        <b-button size="sm" class="button" type="submit" @click="signout()"><span>Sign Out</span></b-button>
-                    </b-nav-form>
-                </b-navbar-nav>
-            </b-collapse>
+    <b-navbar toggleable="md" type="dark" class="navbar">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <router-link :to="{ name :'Overviews'}">
+        <b-navbar-brand>PTEI Visualization</b-navbar-brand>
+      </router-link>
+      <!-- Right aligned nav items -->
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-button size="sm" class="button" type="submit" @click="signout()">
+              <span>Sign Out</span>
+            </b-button>
+          </b-nav-form>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
     <!-- Image -->
     <!-- <div>
         <b-img :src="image" fluid-grow   alt="Responsive image" />
-    </div> -->
-<div>
-    <b-carousel id="carousel1"
-                style="text-shadow: 1px 1px 2px #333;"
-                controls
-                indicators
-                :interval="2000"                
-                v-model="slide"
-                @sliding-start="onSlideStart"
-                @sliding-end="onSlideEnd"
-                :loop="true"
-    >
+    </div>-->
+    <div>
+      <b-carousel
+        id="carousel1"
+        style="text-shadow: 1px 1px 2px #333;"
+        controls
+        indicators
+        :interval="2000"
+        v-model="slide"
+        @sliding-start="onSlideStart"
+        @sliding-end="onSlideEnd"
+        :loop="true"
+      >
+        <!-- Text slides with image -->
+        <b-carousel-slide class="img-fluid" :img-src="require('@/assets/ladyai2.jpg')" fluid-grow></b-carousel-slide>
 
-      
+        <!-- Slides with custom text -->
+        <b-carousel-slide class="img-fluid" :img-src="require('@/assets/oldtown.jpg')" fluid-grow></b-carousel-slide>
 
-      <!-- Text slides with image -->
-      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/ladyai2.jpg')" fluid-grow ></b-carousel-slide>
-
-      <!-- Slides with custom text -->
-      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/oldtown.jpg')" fluid-grow></b-carousel-slide>
-
-      <!-- Slides with image only -->
-      <b-carousel-slide class="img-fluid" :img-src="require('@/assets/PTEIHEAD.png')" fluid-grow ></b-carousel-slide>     
-
-    </b-carousel>
-  </div>
-
+        <!-- Slides with image only -->
+        <b-carousel-slide class="img-fluid" :img-src="require('@/assets/PTEIHEAD.png')" fluid-grow></b-carousel-slide>
+      </b-carousel>
     </div>
+  </div>
 </template>
 
 <script>
-import firebase from 'firebase'
+import firebase from "firebase";
 export default {
-    name : 'Admin',
-    data(){
-        return {
-            image: require('@/assets/o-19.jpg'),
-            formData:{
-                    email:'',
-                    password:''
-                },
-            slide: 0,
-            sliding: null
-        }
-    },
-        methods : {
-            signout(){
-                  this.$router.push('/')   
-                  console.log('signOut')               
+  name: "Admin",
+  data() {
+    return {
+      image: require("@/assets/o-19.jpg"),
+      formData: {
+        email: "",
+        password: ""
+      },
+      slide: 0,
+      sliding: null
+    };
+  },
+  methods: {
+    signout() {
+      this.$router.push("/");
+      console.log("signOut");
     },
     onSlideStart(slide) {
       this.sliding = true;
@@ -74,26 +72,22 @@ export default {
     onSlideEnd(slide) {
       this.sliding = false;
     }
-}
-}
+  }
+};
 </script>
 
 <style scoped>
-
-.navbar {    
-  background: linear-gradient(#0bc0b1 20%, #eaeaec );
+.navbar {
+  background: linear-gradient(#0bc0b1 20%, #eaeaec);
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
   width: 100%;
-   
 }
-
-
 
 .button {
   display: inline-block;
-  border-radius:10px;
+  border-radius: 10px;
   background-color: #faf9f9;
   color: rgb(41, 39, 39);
   border: none;
@@ -116,7 +110,7 @@ export default {
 }
 
 .button span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -137,5 +131,4 @@ export default {
   width: 100%;
   height: 500px;
 }
-
 </style>

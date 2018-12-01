@@ -3,58 +3,57 @@
     <!-- Admin -->
     <Admin/>
 
-    <b-card class="card"  v-if="blog" :key="blog.id">
-      <div class="mb-3" >
-        <img blank blank-color="#ccc" width="600" height="450"  :src="blog.imagepreview"/>
+    <b-card class="card" v-if="blog" :key="blog.id">
+      <div class="mb-3">
+        <img blank blank-color="#ccc" width="600" height="450" :src="blog.imagepreview">
       </div>
 
       <b-media>
         <b-media-body class="ml-3">
           <i class="post-meta">{{ blog.time}}</i>
           <h3 class="mt-4">{{blog.title}}</h3>
-          
+
           <div class="row">
-            <h5  class="des mt-3">
-              {{blog.description}}
-            </h5>
+            <h5 class="des mt-3">{{blog.description}}</h5>
           </div>
           <div class="export">
-            <b-button variant="outline-danger"  v-on:click="_export()">Export</b-button>
+            <b-button variant="outline-danger" v-on:click="_export()">Export</b-button>
           </div>
           <!-- <router-link :to="{ name : 'Overviews'}"><b-button variant="success">Back</b-button></router-link> -->
         </b-media-body>
       </b-media>
       <div class="container-carousel">
-            <carousel :per-page="1"  >
-              <slide>
-                <div class="small">
-                    <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
-                    <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
-                    <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
-                    <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
-                    <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
-                </div>
-              </slide>
-              <slide>    
-                <div class="table-responsive mt-5">   
-                  <table class="table table-bordered table-striped">
-                    <thead>
-                      <tr>
-                        <th v-for="label in blog.graphdata.labels" :key="label.blog">{{label}}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="body in blog.graphdata.datasets" :key="body.id">
-                        <td v-for="dataset in body.data" :key="dataset.blog">{{dataset}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div> 
-              </slide>
-            </carousel>
-          </div>
+        <carousel :per-page="1">
+          <slide>
+            <div class="small">
+              <bargroup v-if="blog.selected == 'bargroup'" :data="blog.graphdata"></bargroup>
+              <line-chart v-if="blog.selected == 'line'" :data="blog.graphdata"></line-chart>
+              <doughnut v-if="blog.selected =='doughnut'" :data="blog.graphdata"></doughnut>
+              <pie v-if="blog.selected =='pie'" :data="blog.graphdata"></pie>
+              <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
+            </div>
+          </slide>
+          <!-- <slide>
+            <div class="table-responsive mt-5">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th v-for="label in blog.graphdata.labels" :key="label.blog">{{label}}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="body in blog.graphdata.datasets" :key="body.id">
+                    <td v-for="dataset in body.data" :key="dataset.blog">{{dataset}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </slide> -->
+        </carousel>
+      </div>
     </b-card>
-  <!-- <Footer/> -->
+    <!-- <Footer/> -->
+    <Footer/>
   </div>
 </template>
 
@@ -97,7 +96,7 @@ import Admin from "../Admin/Admin.vue";
 //Other
 import Footer from "../Other/Footer.vue";
 import moment from "moment";
-import { Carousel, Slide } from 'vue-carousel';
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
   name: "Detailblog",
@@ -110,7 +109,7 @@ export default {
     Admin,
     Footer,
     Carousel,
-    Slide 
+    Slide
   },
 
   data() {
@@ -120,7 +119,7 @@ export default {
         labels: [],
         datasets: []
       },
-      SheetJSFT: _SheetJSFT,
+      SheetJSFT: _SheetJSFT
     };
   },
   // created(){
@@ -160,13 +159,12 @@ export default {
       XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
       /* generate file and send to client */
       XLSX.writeFile(wb, this.blog.title + ".xlsx");
-    },
+    }
   }
 };
 </script>
 
 <style>
-
 .card {
   text-align: center;
   max-width: auto;
@@ -185,17 +183,16 @@ export default {
 .post-meta {
   color: #212529;
   font-weight: 300;
-  font-family: 'Lora', 'Times New Roman', serif;
+  font-family: "Lora", "Times New Roman", serif;
   font-size: 15px;
 }
 
 .des {
   text-align: justify;
   text-indent: 50px;
-  line-height : normal;
+  line-height: normal;
   margin-left: 80px;
   margin-right: 80px;
-
 }
 
 .container-carousel {
@@ -209,7 +206,6 @@ export default {
   font-size: 15px;
   table-layout: fixed;
   margin-top: 10px;
-  
 }
 
 .export {
@@ -217,13 +213,10 @@ export default {
   margin-right: 50px;
   margin-top: 30px;
   margin-bottom: 50px;
-
 }
 
 thead {
   color: white;
-  background-color:rgba(199, 57, 123, 0.61);
+  background-color: rgba(199, 57, 123, 0.61);
 }
-
-
 </style>

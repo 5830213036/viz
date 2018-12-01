@@ -1,215 +1,237 @@
 <template>
   <div>
-     <b-navbar toggleable="md" type="dark"  class="navbar">
-        <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-            <router-link :to="{ name :'Overviews'}">
-                <b-navbar-brand>PTEI Visualization</b-navbar-brand>
-            </router-link>
-            <!-- Right aligned nav items -->
-            <b-collapse is-nav id="nav_collapse">
-                <b-navbar-nav class="ml-auto">
-                    <b-nav-form>
-                        <b-button size="sm" class="button" type="submit" @click="signout()"><span>Sign Out</span></b-button>
-                    </b-nav-form>
-                </b-navbar-nav>
-            </b-collapse>
+    <b-navbar toggleable="md" type="dark" class="navbar">
+      <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+      <router-link :to="{ name :'Overviews'}">
+        <b-navbar-brand>PTEI Visualization</b-navbar-brand>
+      </router-link>
+      <!-- Right aligned nav items -->
+      <b-collapse is-nav id="nav_collapse">
+        <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+            <b-button size="sm" class="button" type="submit" @click="signout()">
+              <span>Sign Out</span>
+            </b-button>
+          </b-nav-form>
+        </b-navbar-nav>
+      </b-collapse>
     </b-navbar>
-<!-- Start Create blog -->
+    <!-- Start Create blog -->
     <b-card class="card">
       <h2 class="mb-4">Create a New Blog</h2>
-        <vue-good-wizard 
-            :steps="steps"
-            :onNext="nextClicked" 
-            :onBack="backClicked">
+      <vue-good-wizard :steps="steps" :onNext="nextClicked" :onBack="backClicked">
         <div slot="page1">
-            <!-- image -->
-            <div class="mt-3">  
-              <img :src="imagepreview" class="preview-image" width="450"  height="300" v-on:click="openupload" alt="Responsive image" />
-              <div class="browse">
-                <b-form-file class="mt-3" type="file" name="image" id="file-filed" v-model="imagepreview" v-on:change="updatepreview"></b-form-file>
-              </div>              
+          <!-- image -->
+          <div class="mt-3">
+            <img
+              :src="imagepreview"
+              class="preview-image"
+              width="450"
+              height="300"
+              v-on:click="openupload"
+              alt="Responsive image"
+            >
+            <div class="browse">
+              <b-form-file
+                class="mt-3"
+                type="file"
+                name="image"
+                id="file-filed"
+                v-model="imagepreview"
+                v-on:change="updatepreview"
+              ></b-form-file>
             </div>
+          </div>
 
-            <div class="container">
-              <label class="label"><b>Title : </b></label>
-              <b-form-input   class="input"    
-                              type="text"
-                              v-model="title"
-                              required
-                              placeholder="Title...">
-              </b-form-input>
+          <div class="container">
+            <label class="label">
+              <b>Title :</b>
+            </label>
+            <b-form-input class="input" type="text" v-model="title" required placeholder="Title..."></b-form-input>
 
-              <label class="label mt-4"><b>Description : </b></label>
-              <b-form-textarea  class="textarea"
-                                type="text"
-                                id="description"
-                                v-model="description"
-                                placeholder="Description..."
-                                :rows="3"
-                                :max-rows="6">
-              </b-form-textarea>
-            </div>
+            <label class="label mt-4">
+              <b>Description :</b>
+            </label>
+            <b-form-textarea
+              class="textarea"
+              type="text"
+              id="description"
+              v-model="description"
+              placeholder="Description..."
+              :rows="3"
+              :max-rows="6"
+            ></b-form-textarea>
+          </div>
         </div>
 
         <div slot="page2">
           <!-- chart -->
           <div>
-            <h3>Import Your Data</h3>            
-            <vue-xlsx-table @on-select-file="handleSelectedFile">Import Your Data</vue-xlsx-table>  
-            <b-modal  v-model="modalShow" v-if="xlsdata" size="lg" title="If all right" @ok="handleOk">
-              <div class="table-responsive">           
-              <table  class="table table-bordered">
-                <thead >
+            <h3>Import Your Data</h3>
+            <vue-xlsx-table @on-select-file="handleSelectedFile">Import Your Data</vue-xlsx-table>
+            <button @click="reset()">reset</button>
+            <b-modal
+              v-model="modalShow"
+              v-if="xlsdata"
+              size="lg"
+              title="If all right"
+              @ok="handleOk"
+            >
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead>
                     <tr>
                       <th v-for="(head, index) in xlsdata.header" :key="index">{{head}}</th>
                     </tr>
-                </thead>
-                <tbody>
+                  </thead>
+                  <tbody>
                     <tr v-for="(body, index) in xlsdata.body" :key="index">
-                        <td v-for="item in body" :key="item">{{item}}</td>
+                      <td v-for="item in body" :key="item">{{item}}</td>
                     </tr>
-                </tbody>
-              </table>
-              </div>             
-            </b-modal>   
-
-            <div v-if="isdataOk">     
-              <div class="table-responsive  mt-5">   
-              <table class="table table-bordered table-striped" >            
-                <thead >
-                  <tr>
-                    <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(body, index) in xlsdata.body" :key="index">
-                    <td v-for="item in body" :key="item">{{item}}</td>
-                  </tr>
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
               </div>
-        <section>
-          <section>
-            <div>
-              
+            </b-modal>
+
+            <div v-if="isdataOk">
+              <div class="table-responsive mt-5">
+                <table class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <td v-for="(head, index) in xlsdata.header" :key="index">{{head}}</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(body, index) in xlsdata.body" :key="index">
+                      <td v-for="item in body" :key="item">{{item}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <section>
+                <section>
+                  <div></div>
+                </section>
+                <b-form-group class="mt-3" label="Select a Chart"></b-form-group>
+                <div>
+                  <b-row class="row-chart">
+                    <!-- <b-card-group> -->
+                    <div class="col-4">
+                      <input type="radio" id="bargroup" value="bargroup" v-model="selected">
+                      <label for="bargroup">
+                        <b-card class="box">
+                          <img src="../../assets/bar.png" width="80">
+                          <p>Bar Chart</p>
+                        </b-card>
+                      </label>
+                    </div>
+
+                    <div class="col-4">
+                      <input type="radio" id="line" value="line" v-model="selected">
+                      <label for="line">
+                        <b-card class="box">
+                          <img src="../../assets/line.png" width="80">
+                          <p>Line Chart</p>
+                        </b-card>
+                      </label>
+                    </div>
+
+                    <div class="col-4">
+                      <input type="radio" id="doughnut" value="doughnut" v-model="selected">
+                      <label for="doughnut">
+                        <b-card class="box">
+                          <img src="../../assets/doughnut.png" width="80">
+                          <p>Doughnut Chart</p>
+                        </b-card>
+                      </label>
+                    </div>
+
+                    <div class="col-4">
+                      <input type="radio" id="pie" value="pie" v-model="selected">
+                      <label for="pie">
+                        <b-card class="box">
+                          <img src="../../assets/pie.png" width="80">
+                          <p>Pie Chart</p>
+                        </b-card>
+                      </label>
+                    </div>
+
+                    <div class="col-4">
+                      <input type="radio" id="horizontal" value="horizontal" v-model="selected">
+                      <label for="horizontal">
+                        <b-card class="box">
+                          <img src="../../assets/horizon.png" width="80">
+                          <p>Horizontal Chart</p>
+                        </b-card>
+                      </label>
+                    </div>
+
+                    <div class="col-4">
+                      <input type="radio" id="bubble" value="bubble" v-model="selected">
+                      <label for="bubble">
+                        <b-card class="box">
+                          <img src="../../assets/bubble.png" width="80">
+                          <p>Bubble Chart</p>
+                        </b-card>
+                      </label>
+                    </div>
+                    <!-- </b-card-group> -->
+                  </b-row>
+                </div>
+              </section>
+              <section>
+                <div class="small">
+                  <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
+                  <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+                  <pie v-if="selected =='pie'" :data="graphdata"></pie>
+                  <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>
+                  <bargroup v-if="selected =='bargroup'" :data="graphdata"></bargroup>
+                </div>
+              </section>
             </div>
-          </section>   
-        <b-form-group class="mt-3" label="Select a Chart"></b-form-group> 
-            <div >
-              <b-row class="row-chart">
-              <!-- <b-card-group> -->
-                <div class="col-4">
-                  <input type="radio" id="bargroup" value="bargroup" v-model="selected">
-                  <label for="bargroup">
-                    <b-card class="box"> 
-                      <img src="../../assets/bar.png" width="80"/>
-                      <p>Bar Chart</p>
-                    </b-card>
-                  </label>
-                </div>
-
-                <div class="col-4">
-                  <input type="radio" id="line" value="line" v-model="selected">
-                  <label for="line">
-                    <b-card class="box"> 
-                      <img src="../../assets/line.png" width="80"/>
-                      <p>Line Chart</p>
-                    </b-card>
-                  </label>
-                </div> 
-
-                <div class="col-4">
-                  <input type="radio" id="doughnut" value="doughnut" v-model="selected">
-                  <label for="doughnut">
-                    <b-card class="box"> 
-                      <img src="../../assets/doughnut.png" width="80"/>
-                      <p>Doughnut Chart</p>
-                    </b-card>
-                  </label>
-                </div>
-
-                <div class="col-4">
-                  <input type="radio" id="pie" value="pie" v-model="selected">
-                  <label for="pie">
-                    <b-card class="box"> 
-                      <img src="../../assets/pie.png" width="80"/>
-                      <p>Pie Chart</p>
-                    </b-card>
-                  </label>
-                </div>
-
-                <div class="col-4">
-                  <input type="radio" id="horizontal" value="horizontal" v-model="selected">
-                  <label for="horizontal">
-                    <b-card class="box"> 
-                      <img src="../../assets/horizon.png" width="80"/>
-                      <p>Horizontal Chart</p>
-                    </b-card>
-                  </label>
-                </div>
-
-                <div class="col-4">
-                  <input type="radio" id="bubble" value="bubble" v-model="selected">
-                  <label for="bubble">
-                    <b-card class="box"> 
-                      <img src="../../assets/bubble.png" width="80"/>
-                      <p>Bubble Chart</p>
-                    </b-card>
-                  </label>
-                </div> 
-              <!-- </b-card-group> -->
-              </b-row>
-            </div>
-          </section>
-          <section>
-            <div class="small">
-              <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
-              <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
-             <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>  
-            </div>
-        </section>  
+          </div>
         </div>
-      </div>
-    </div>
 
-        <div slot="page3"> 
+        <div slot="page3">
           <section>
             <div class="mb-3">
-              <img :src="imagepreview" class="preview-image" width="450"  height="300" v-on:click="openupload" alt="Responsive image" />
+              <img
+                :src="imagepreview"
+                class="preview-image"
+                width="450"
+                height="300"
+                v-on:click="openupload"
+                alt="Responsive image"
+              >
             </div>
           </section>
           <b-media>
             <b-media-body class="ml-3">
               <h3 class="mt-4">{{title}}</h3>
-              
-              <div class="row">
-                <h5  class="des mt-3">
-                  {{description}}
-                </h5>
-              </div>                            
-            </b-media-body>            
-          </b-media>
 
-            <div class="small">
-              <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
-              <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
-              <pie v-if="selected =='pie'" :data="graphdata" ></pie>
-              <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>    
-              <bargroup v-if="selected =='bargroup'" :data="graphdata" ></bargroup>
-            </div>    
-  <!-- submit -->
-      <!-- <div class="add">
-        <b-button variant="success" v-model="time" v-on:click="Addblog()" >Confirm</b-button>
-        <router-link :to="{ name : 'Overviews'}" >
+              <div class="row">
+                <h5 class="des mt-3">{{description}}</h5>
+              </div>
+            </b-media-body>
+          </b-media>
+          <div class="small">
+            <line-chart v-if="selected == 'line'" :data="graphdata"></line-chart>
+            <doughnut v-if="selected =='doughnut'" :data="graphdata"></doughnut>
+            <pie v-if="selected =='pie'" :data="graphdata"></pie>
+            <horizontal-bar v-if="selected =='horizontal'" :data="graphdata"></horizontal-bar>
+            <bargroup v-if="selected =='bargroup'" :data="graphdata"></bargroup>
+          </div>
+          <!-- submit -->
+          <!-- <div class="add">
+          <b-button variant="success" v-model="time" v-on:click="Addblog()" >Confirm</b-button>
+          <router-link :to="{ name : 'Overviews'}" >
           <b-button variant="danger">Cancel</b-button>
-        </router-link>
-      </div> -->
-      
-      </div>
+          </router-link>
+          </div>-->
+        </div>
       </vue-good-wizard>
     </b-card>
+    <Footer/>
   </div>
 </template>
 
@@ -223,11 +245,9 @@ import Pie from "../Chart/PieChart.js";
 import HorizontalBar from "../Chart/HorizontalChart.js";
 import moment from "moment";
 
-
 export default {
   name: "Addblog",
   components: { bargroup, LineChart, Doughnut, Pie, HorizontalBar },
-
   data() {
     return {
       time: moment().format("MM/DD/YYYY hh:mm:ss"),
@@ -236,10 +256,6 @@ export default {
       description: null,
       slug: null,
       title: null,
-      // savedata : {
-      //   labels : [],
-      //   datasets : []
-      // },
       graphdata: {
         labels: [],
         datasets: []
@@ -268,44 +284,43 @@ export default {
           label: "Preview",
           slot: "page3"
         }
-        
       ]
     };
   },
   methods: {
-    Addblog() {
-      //create a slug
-      this.slug = slugify(this.title, {
-        replacement: "-",
-        remove: /[$*_+~.()'"!\-;@]/g,
-        lower: true
-      });
-      // for(let item in this.savedata.datasets){
-      //   this.savedata.datasets[item]._meta = null
-      // }
-      for (let item in this.graphdata.datasets) {
-        this.graphdata.datasets[item]._meta = null;
-      }
-      console.log(this.graphdata);
-      let ref = db.collection("blogs");
-      ref
-        .add({
-          graphdata: this.graphdata,
-          time: this.time,
-          imagepreview: this.imagepreview,
-          title: this.title,
-          description: this.description,
-          selected: this.selected,
-          slug: this.slug
-        })
-        .then(() => {
-          // this.$router.push({ name : 'Overviews '})
-          this.$router.replace({ name: "Overviews" });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    },
+    // Addblog() {
+    //create a slug
+    // this.slug = slugify(this.title, {
+    //   replacement: "-",
+    //   remove: /[$*_+~.()'"!\-;@]/g,
+    //   lower: true
+    // });
+    // for(let item in this.savedata.datasets){
+    //   this.savedata.datasets[item]._meta = null
+    // }
+    //   for (let item in this.graphdata.datasets) {
+    //     this.graphdata.datasets[item]._meta = null;
+    //   }
+    //   console.log(this.graphdata);
+    //   let ref = db.collection("blogs");
+    //   ref
+    //     .add({
+    //       graphdata: this.graphdata,
+    //       time: this.time,
+    //       imagepreview: this.imagepreview,
+    //       title: this.title,
+    //       description: this.description,
+    //       selected: this.selected,
+    //       slug: this.slug
+    //     })
+    //     .then(() => {
+    //       // this.$router.push({ name : 'Overviews '})
+    //       this.$router.replace({ name: "Overviews" });
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // },
     openupload() {
       document.getElementById("file-filed").click();
     },
@@ -334,7 +349,6 @@ export default {
       let found = graphheader.indexOf("Title");
       if (found != -1) graphheader.splice(found, 1);
       this.graphdata.labels = graphheader;
-
       for (let index in this.xlsdata.body) {
         let body = this.xlsdata.body[index];
         let dataset = {
@@ -342,38 +356,31 @@ export default {
           data: [],
           fill: true,
           borderColor: [],
-          backgroundColor: [this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),          
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),          
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),
-          this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),this.getcolors(),]
+          backgroundColor: [
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors(),
+            this.getcolors()
+          ]
         };
-        
         for (let item in body) {
           if (item == "Title") {
             dataset.label = body[item];
-            // dataset.backgroundColor = [{
-            //   if (backgroundColor = 0) {
-            //     this.getcolors()
-            //   }
-            // }]
+            // dataset.backgroundColor = this.getcolors();
             dataset.borderColor = this.getcolors();
           } else {
             dataset.data.push(body[item]);
-            
           }
         }
         this.graphdata.datasets.push(dataset);
@@ -394,35 +401,35 @@ export default {
     nextClicked(currentPage) {
       if (currentPage == 2) {
         this.slug = slugify(this.title, {
-        replacement: "-",
-        remove: /[$*_+~.()'"!\-;@]/g,
-        lower: true
-      });
-      // for(let item in this.savedata.datasets){
-      //   this.savedata.datasets[item]._meta = null
-      // }
-      for (let item in this.graphdata.datasets) {
-        this.graphdata.datasets[item]._meta = null;
-      }
-      console.log(this.graphdata);
-      let ref = db.collection("blogs");
-      ref
-        .add({
-          graphdata: this.graphdata,
-          time: this.time,
-          imagepreview: this.imagepreview,
-          title: this.title,
-          description: this.description,
-          selected: this.selected,
-          slug: this.slug
-        })
-        .then(() => {
-          // this.$router.push({ name : 'Overviews '})
-          this.$router.replace({ name: "Overviews" });
-        })
-        .catch(err => {
-          console.log(err);
+          replacement: "-",
+          remove: /[$*_+~.()'"!\-;@]/g,
+          lower: true
         });
+        // for(let item in this.savedata.datasets){
+        //   this.savedata.datasets[item]._meta = null
+        // }
+        for (let item in this.graphdata.datasets) {
+          this.graphdata.datasets[item]._meta = null;
+        }
+        console.log(this.graphdata);
+        let ref = db.collection("blogs");
+        ref
+          .add({
+            graphdata: this.graphdata,
+            time: this.time,
+            imagepreview: this.imagepreview,
+            title: this.title,
+            description: this.description,
+            selected: this.selected,
+            slug: this.slug
+          })
+          .then(() => {
+            // this.$router.push({ name : 'Overviews '})
+            this.$router.replace({ name: "Overviews" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
       console.log("next clicked", currentPage);
       return true; //return false if you want to prevent moving to next page
@@ -430,6 +437,10 @@ export default {
     backClicked(currentPage) {
       console.log("back clicked", currentPage);
       return true; //return false if you want to prevent moving to previous page
+    },
+    reset () {
+    Object.assign(this.$data, this.$options.data());
+    console.log('reset')
     }
   }
 };
@@ -438,14 +449,12 @@ export default {
 <!-- form-file.vue -->
 
 <style scoped>
-
-.navbar {    
-  background: linear-gradient(#0bc0b1 20%, #eaeaec );
+.navbar {
+  background: linear-gradient(#0bc0b1 20%, #eaeaec);
   /* background:#e66465; */
   border: 5px;
   border-color: #ccc;
   width: 100%;
-   
 }
 
 .card {
@@ -454,7 +463,6 @@ export default {
   margin-top: 30px;
   margin-right: 100px;
   margin-left: 100px;
-  
 }
 
 .btn {
@@ -471,7 +479,6 @@ export default {
   width: 50%;
   border-radius: 15px;
   padding: 5px 20px;
-  
 }
 
 .textarea {
@@ -479,7 +486,6 @@ export default {
   border-radius: 20px;
   padding: 5px 20px;
   margin: auto;
-  
 }
 
 .container {
@@ -503,16 +509,14 @@ export default {
   margin-right: 80px;
 }
 
-
 .radio-component {
   border-color: #4d82ff;
   /* background: #849edb; */
-  
 }
 
 .button {
   display: inline-block;
-  border-radius:10px;
+  border-radius: 10px;
   background-color: #faf9f9;
   color: rgb(41, 39, 39);
   border: none;
@@ -535,7 +539,7 @@ export default {
 }
 
 .button span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -555,10 +559,5 @@ export default {
 .browse {
   margin: auto;
   width: 60%;
-  
 }
-
-
-
-
 </style>

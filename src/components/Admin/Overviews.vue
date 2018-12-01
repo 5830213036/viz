@@ -65,7 +65,8 @@
                 </b-media>
 
         </b-card>
-    </div>
+        <Footer/>
+    </div>    
 </template>
 
 <script>
@@ -74,6 +75,7 @@ import Admin from "../Admin/Admin.vue";
 //Other
 import Footer from "../Other/Footer.vue";
 import Share from '../Other/Share.vue'
+import moment from "moment";
 export default {
   components: { Admin, Footer ,Share},
   name: "Main",
@@ -84,7 +86,7 @@ export default {
     };
   },
   created() {
-    let ref = db.collection("blogs").orderBy("time","desc");
+    let ref = db.collection("blogs").orderBy("time","desc").limit(5)
     ref.get().then(snapshot => {
       snapshot.forEach(doc => {
         console.log(doc.data());

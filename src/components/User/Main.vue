@@ -44,6 +44,7 @@
         <!-- Pagination -->
       
         <!-- Footer -->
+        <Footer/>
 
     </div>
 </template>

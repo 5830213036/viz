@@ -165,6 +165,7 @@
             </div> -->
             </vue-good-wizard>
         </b-card>
+        <Footer/>
     </div>
 </template>
 
@@ -188,7 +189,7 @@ export default {
         labels: [],
         datasets: []
       },
-      time: moment().format("MM/DD/YYYY hh:mm"),
+      time: moment().format("MM/DD/YYYY hh:mm:ss"),
       slug: null,
       options: [
         { text: "Line", value: "line" },

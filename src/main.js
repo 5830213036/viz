@@ -26,10 +26,15 @@ Vue.use(vUploader, uploaderConfig);
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 
-// 14//11/2015 npm install -S vue-carousel
+// 14//11/2018 npm install -S vue-carousel
 import VueCarousel from 'vue-carousel';
 Vue.use(VueCarousel);
 
+// 30/11/2018 npm install vue-lazyload -D
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload, {
+  lazyComponent: true
+})
 
 Vue.config.productionTip = false
 

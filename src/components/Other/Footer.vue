@@ -1,10 +1,15 @@
 <template>
     <div>
     <!-- Footer -->
-   <div  class="card-footer text-muted bg-white text-dark" >
-        <b-container fluid class="bv-example-row text-dark">
-            <b-row>
-                <b-col sm="5" md="6">             
+   <div  class="card-footer">
+       
+           
+                <div class="card-body">                        
+                    <h6>Faculty of Hospitality and Tourism (FHT)</h6>
+                    <h6>Prince of Songkla University Phuket Campus, Thailand</h6>                        
+                </div>
+
+                <!-- <b-col sm="5" md="6">             
                     <div class="card-body ">
                         <h5 class="card-title">ABOUT US</h5>
                         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -17,8 +22,8 @@
                         <b-button variant="warning">#TRAVEL</b-button>
                         <b-button variant="primary">#TOURISM</b-button>
                     </div>     
-                </b-col>
-                <b-col sm="5" md="6">            
+                </b-col> -->
+                <!-- <b-col sm="5" md="6">            
                     <div class="card-body">
                         <h5 class="card-title">POPULAR</h5>
                         <b-media>
@@ -48,9 +53,9 @@
                                 </p>
                         </b-media> 
                     </div>
-                </b-col>
-            </b-row>
-        </b-container>
+                </b-col> -->
+           
+      
     </div>
     </div>
 </template>
@@ -62,5 +67,20 @@ name :'Footer'
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Rubik');
+
+.card-footer{
+    background-color: rgb(12, 11, 11);
+    padding: 0%;
+    border-top: 0px;
+    
+}
+
+.card-body{
+    text-align: center;
+    color: white;
+    font-family: 'Rubik', sans-serif;
+    
+}
 
 </style>

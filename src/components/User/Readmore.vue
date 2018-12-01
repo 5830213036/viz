@@ -33,7 +33,7 @@
                     <HorizontalBar v-if="blog.selected =='horizontal'" :data="blog.graphdata"></HorizontalBar>
                 </div>
               </slide>
-              <slide>    
+              <!-- <slide>    
                 <div class="table-responsive mt-5">   
                   <table class="table table-bordered table-striped">
                     <thead>
@@ -48,10 +48,11 @@
                     </tbody>
                   </table>
                 </div> 
-              </slide>
+              </slide> -->
             </carousel>
           </div>
         </b-card>
+        <Footer/>
     </div>
 </template>
 
