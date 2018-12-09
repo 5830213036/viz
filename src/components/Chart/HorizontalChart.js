@@ -8,9 +8,17 @@ export default {
     mounted () {
       // Overwriting base render method with actual data.
       this.renderChart({
-        labels: this.data.labels,
+      labels: this.data.labels,
       datasets: this.data.datasets,
-        
+      options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }  
       })
     }
 }

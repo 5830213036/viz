@@ -8,9 +8,7 @@ export default {
     this.renderChart({
       labels: this.data.labels,
       datasets: this.data.datasets
-      
       ,
-     
       options: {
         title: {
           display: true,

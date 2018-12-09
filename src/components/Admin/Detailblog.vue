@@ -2,17 +2,14 @@
   <div>
     <!-- Admin -->
     <Admin/>
-
     <b-card class="card" v-if="blog" :key="blog.id">
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <img blank blank-color="#ccc" width="600" height="450" :src="blog.imagepreview">
-      </div>
-
+      </div> -->
       <b-media>
         <b-media-body class="ml-3">
-          <i class="post-meta">{{ blog.time}}</i>
           <h3 class="mt-4">{{blog.title}}</h3>
-
+            <i class="post-meta">{{ blog.time}}</i>
           <div class="row">
             <h5 class="des mt-3">{{blog.description}}</h5>
           </div>

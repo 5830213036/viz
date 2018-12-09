@@ -354,7 +354,7 @@ export default {
         let dataset = {
           label: [],
           data: [],
-          fill: true,
+          fill: false,
           borderColor: [],
           backgroundColor: [
             this.getcolors(),

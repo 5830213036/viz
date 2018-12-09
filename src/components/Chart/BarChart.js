@@ -8,11 +8,8 @@ export default {
     mounted () {
       // Overwriting base render method with actual data.
       this.renderChart({
-       
-      
         label : this.data.labels,
         data : this.data.datasets
-     
         ,
         options: {
           title: {
