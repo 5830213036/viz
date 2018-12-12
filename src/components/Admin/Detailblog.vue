@@ -9,7 +9,7 @@
       <b-media>
         <b-media-body class="ml-3">
           <h3 class="mt-4">{{blog.title}}</h3>
-            <i class="post-meta">{{ blog.time}}</i>
+            <!-- <i class="post-meta">{{ blog.time}}</i> -->
           <div class="row">
             <h5 class="des mt-3">{{blog.description}}</h5>
           </div>
@@ -161,7 +161,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
 .card {
   text-align: center;
   max-width: auto;
@@ -172,9 +173,9 @@ export default {
 }
 
 .small {
-  max-width: 600px;
+  max-width: 70%;
   margin: 100px auto;
-  margin-top: 4%;
+  margin-top: 5%;
 }
 
 .post-meta {
@@ -190,6 +191,8 @@ export default {
   line-height: normal;
   margin-left: 80px;
   margin-right: 80px;
+  font-family: 'Comfortaa', cursive;
+  font-size: 16px;
 }
 
 .container-carousel {

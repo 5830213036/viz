@@ -8,13 +8,12 @@
           </div> -->
           <b-media>
             <b-media-body class="ml-3">
-              
               <h3 class="mt-4">{{blog.title}}</h3>
-              <i class="post-meta">{{ blog.time}}</i>
+              <!-- <i class="post-meta">{{ blog.time}}</i> -->
               <div class="row">
-                <h5  class="des mt-3">
+                <p  class="des mt-3" >
                   {{blog.description}}
-                </h5>
+                </p>
               </div>                            
             </b-media-body>            
           </b-media>
@@ -61,25 +60,7 @@ import XLSX from "xlsx";
 // const make_cols = refstr => Array(XLSX.utils.decode_range(refstr).e.c + 1).fill(0).map((x,i) => ({name:XLSX.utils.encode_col(i), key:i}));
 const _SheetJSFT = [
   "xlsx",
-  "xlsb",
-  "xlsm",
-  "xls",
-  "xml",
-  "csv",
-  "txt",
-  "ods",
-  "fods",
-  "uos",
-  "sylk",
-  "dif",
-  "dbf",
-  "prn",
-  "qpw",
-  "123",
-  "wb*",
-  "wq*",
-  "html",
-  "htm"
+  "xls"
 ]
   .map(function(x) {
     return "." + x;
@@ -98,10 +79,12 @@ import User from "../User/User.vue";
 import Footer from "../Other/Footer.vue";
 import moment from "moment";
 import { Carousel, Slide } from 'vue-carousel';
+import Share from '../Other/Share.vue'
 export default {
   name: "Readmore",
   components: {
     bargroup,
+    Share,
     LineChart,
     Doughnut,
     Pie,
@@ -149,6 +132,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
 .card {
   text-align: center;
   max-width: auto;
@@ -159,9 +143,9 @@ export default {
 }
 
 .small {
-  max-width: 600px;
+  max-width: 70%;
   margin: 100px auto;
-  margin-top: 4%;
+  margin-top: 5%;
 }
 
 .form {
@@ -185,6 +169,8 @@ export default {
   line-height: normal;
   margin-left: 80px;
   margin-right: 80px;
+  font-family: 'Comfortaa', cursive;
+  font-size: 16px;
 }
 
 .container-carousel {

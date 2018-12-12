@@ -69,7 +69,7 @@
           <div>
             <h3>Import Your Data</h3>
             <vue-xlsx-table @on-select-file="handleSelectedFile">Import Your Data</vue-xlsx-table>
-            <button @click="reset()">reset</button>
+            <!-- <button @click="reset()">reset</button> -->
             <b-modal
               v-model="modalShow"
               v-if="xlsdata"
@@ -166,7 +166,7 @@
                       </label>
                     </div>
 
-                    <div class="col-4">
+                    <!-- <div class="col-4">
                       <input type="radio" id="bubble" value="bubble" v-model="selected">
                       <label for="bubble">
                         <b-card class="box">
@@ -174,7 +174,7 @@
                           <p>Bubble Chart</p>
                         </b-card>
                       </label>
-                    </div>
+                    </div> -->
                     <!-- </b-card-group> -->
                   </b-row>
                 </div>
@@ -264,6 +264,7 @@ export default {
       modalShow: false,
       isdataOk: false,
       selected: null,
+      
       options: [
         { text: "Line", value: "line" },
         { text: "Doughnut", value: "doughnut" },
@@ -284,7 +285,8 @@ export default {
           label: "Preview",
           slot: "page3"
         }
-      ]
+      ],
+      
     };
   },
   methods: {
@@ -324,7 +326,6 @@ export default {
     openupload() {
       document.getElementById("file-filed").click();
     },
-
     updatepreview(e) {
       var reader,
         files = e.target.files;
@@ -351,40 +352,36 @@ export default {
       this.graphdata.labels = graphheader;
       for (let index in this.xlsdata.body) {
         let body = this.xlsdata.body[index];
-        let dataset = {
-          label: [],
-          data: [],
-          fill: false,
-          borderColor: [],
-          backgroundColor: [
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors(),
-            this.getcolors()
-          ]
-        };
+          
+      let dataset = {
+        label: [],
+        data: [],
+        fill: false,
+        backgroundColor:[]
+      }
+      // for (let item in this.dataset) {
+      //     this.dataset[item]._meta = null;
+      //   }
+      // this.dataset = [dataset];
+            // let obg = Object.create(dataset);
+            console.log(this.dataset)
+           dataset.backgroundColor = ["#E74C3C","#5DADE2","#DC7633","#2ECC71","#138D75","#F5B041","#A9CCE3",
+           "#B03A2E","#4A235A","#F5B7B1","#A9DFBF"]
+           dataset.borderColor = '#000000'
         for (let item in body) {
           if (item == "Title") {
             dataset.label = body[item];
-            // dataset.backgroundColor = this.getcolors();
-            dataset.borderColor = this.getcolors();
           } else {
             dataset.data.push(body[item]);
           }
         }
+        // let obg = [];
+        // obg.push(dataset);
+        // console.log(obg)
+        // console.log(index)
         this.graphdata.datasets.push(dataset);
       }
+      // console.log(this.dataset.length)
       this.isdataOk = true;
       // this.savedata.datasets = this.graphdata.datasets.slice();
       // this.savedata.labels = this.graphdata.labels.slice();
@@ -470,7 +467,7 @@ export default {
 }
 
 .small {
-  max-width: 600px;
+  max-width: 60%;
   margin: 100px auto;
   margin-top: 4%;
 }
@@ -559,5 +556,12 @@ export default {
 .browse {
   margin: auto;
   width: 60%;
+}
+
+.table-responsive {
+  border-collapse: collapse;
+  font-size: 15px;
+  table-layout: fixed;
+  margin-top: 10px;
 }
 </style>

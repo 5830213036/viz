@@ -45,12 +45,12 @@
                 </b-media-aside>
                     <b-media-body class="ml-3">
                         <b-media-body class="content">
-                            <h4 class="mt-0 mb-1">{{blog.title}}</h4>
+                            <h4 class="ptei mt-0 mb-1">{{blog.title}}</h4>
                             <!-- <i class="post-meta">{{ blog.time}}</i> -->
                             <h6>
                                 <!-- {{blog.description}} -->
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-                                Nam laoreet, nunc et accumsan cursus, neque eros sodales lectus....
+                                <!-- Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Nam laoreet, nunc et accumsan cursus, neque eros sodales lectus.... -->
                             </h6>       
                             <div>           
                                 <router-link :to="{name : 'Detailblog', params: {detail_slug : blog.slug}}">
@@ -86,7 +86,7 @@ export default {
     };
   },
   created() {
-    let ref = db.collection("blogs").orderBy("time","desc").limit(5)
+    let ref = db.collection("blogs").orderBy("time","desc")
     ref.get().then(snapshot => {
       snapshot.forEach(doc => {
         console.log(doc.data());
