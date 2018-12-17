@@ -15,6 +15,9 @@ import Detailblog from '@/components/Admin/Detailblog'
 import Addblog from '@/components/Admin/Addblog'
 import Signin from '@/components/Admin/Signin'
 
+// Other
+import register from '@/components/Other/register'
+
 Vue.use(Router)
 
 export default new Router({
@@ -68,8 +71,12 @@ export default new Router({
       path: '/Readmore/:read_slug',
       name: 'Readmore',
       component: Readmore
-    }
-
+    },
+    {
+      path: '/register/',
+      name: 'register',
+      component: register
+    },
 
   
     

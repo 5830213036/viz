@@ -365,9 +365,10 @@ export default {
       // this.dataset = [dataset];
             // let obg = Object.create(dataset);
             console.log(this.dataset)
-           dataset.backgroundColor = ["#E74C3C","#5DADE2","#DC7633","#2ECC71","#138D75","#F5B041","#A9CCE3",
-           "#B03A2E","#4A235A","#F5B7B1","#A9DFBF"]
+          //  dataset.backgroundColor = ["#E74C3C","#5DADE2","#DC7633","#2ECC71","#138D75","#F5B041","#A9CCE3",
+          //  "#B03A2E","#4A235A","#F5B7B1","#A9DFBF"]
            dataset.borderColor = '#000000'
+           dataset.backgroundColor = this.getcolors()
         for (let item in body) {
           if (item == "Title") {
             dataset.label = body[item];

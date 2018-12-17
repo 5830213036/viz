@@ -16,6 +16,11 @@
                             <span>Sign In</span>
                           </b-button>
                         </router-link>
+                        <router-link :to="{ name : 'Signin'}">
+                          <b-button size="sm" class="button">
+                            <span>Sign In</span>
+                          </b-button>
+                        </router-link>
                         <!-- The Modal -->
                         <!-- <div id="signin" class="modal">  
                           <div class="modal-content animate" >
