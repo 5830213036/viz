@@ -6,6 +6,9 @@ import Main from '@/components/User/Main'
 import Detail from '@/components/User/Detail'
 import Readmore from '@/components/User/Readmore'
 
+//ULogin
+import LMain from '@/components/ULogin/LMain'
+import LReadmore from '@/components/ULogin/LReadmore'
 
 // admin
 import Overviews from '@/components/Admin/Overviews'
@@ -26,6 +29,11 @@ export default new Router({
       path: '/',
       name: 'Main',
       component: Main
+    },
+    {
+      path: '/LMain',
+      name: 'LMain',
+      component: LMain
     },
     {
       path: '/add-blog',
@@ -71,6 +79,11 @@ export default new Router({
       path: '/Readmore/:read_slug',
       name: 'Readmore',
       component: Readmore
+    },
+    {
+      path: '/LReadmore/:read_slug',
+      name: 'LReadmore',
+      component: LReadmore
     },
     {
       path: '/register/',

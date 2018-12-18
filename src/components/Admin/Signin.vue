@@ -1,35 +1,24 @@
 <template>
 <body>
-
     <div class="container">
-
-        <div class="row">
-            
-            <b-card>
-                               
+        <div class="row">     
+            <b-card>             
                 <div class="container" >
-                    <b class="total">Admin Sign In</b>
+                    <b class="total">Sign In</b>
                 </div>
-
                 <div class="container">
-                    
                     <!-- <label class="label"><b>Email</b></label>       -->
                     <input type="text" placeholder="Your Email" v-model="formData.email" required>      
-
                     <!-- <label class="label"><b>Password</b></label> -->
                     <input type="password" placeholder="Your Password" v-model="formData.password" required>
-    
                     <button class="btn-login"  v-on:click="signIn()"><b>SIGN IN</b></button>  
-
                      <router-link :to="{ name :'Main'}">                    
                         <a  class="previous round">Back to Home Page</a>                    
                     </router-link>
-                    
                 </div> 
             </b-card>
         </div>
     </div>
-
 </body>                          
 </template>
 
@@ -51,10 +40,14 @@ export default {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.formData.email, this.formData.password)
-        .then(user => {
+        .then(() => {
           // Do Something After Sign in
           //console.log(user)
-          this.$router.push("Overviews");
+          if(this.formData.email == 'admin@fht.co.th'){
+            this.$router.push("Overviews");
+          }else{
+            this.$router.push("LMain");
+          }
         })
         .catch(e => {
           alert(e.message);

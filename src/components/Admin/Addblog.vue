@@ -47,7 +47,14 @@
             <label class="label">
               <b>Title :</b>
             </label>
-            <b-form-input class="input" type="text" v-model="title" required placeholder="Title..."></b-form-input>
+            <b-form-input class="input" type="text" v-model="title" required placeholder="Title...">
+            </b-form-input>
+
+            <label class="label">
+              <b>Tag :</b>
+            </label>
+            <b-form-input class="input" type="text" v-model="tag" placeholder="Tag...">
+            </b-form-input>
 
             <label class="label mt-4">
               <b>Description :</b>
@@ -208,7 +215,7 @@
           <b-media>
             <b-media-body class="ml-3">
               <h3 class="mt-4">{{title}}</h3>
-
+              <h6 class="mt-4">{{tag}}</h6>
               <div class="row">
                 <h5 class="des mt-3">{{description}}</h5>
               </div>
@@ -256,6 +263,7 @@ export default {
       description: null,
       slug: null,
       title: null,
+      tag : 'phuket' ,
       graphdata: {
         labels: [],
         datasets: []
@@ -419,7 +427,8 @@ export default {
             title: this.title,
             description: this.description,
             selected: this.selected,
-            slug: this.slug
+            slug: this.slug,
+            tag: this.tag
           })
           .then(() => {
             // this.$router.push({ name : 'Overviews '})

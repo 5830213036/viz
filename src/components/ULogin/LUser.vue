@@ -11,16 +11,9 @@
                 <b-navbar-nav class="ml-auto">
                     <b-nav-form>
                         <!-- <b-button size="sm" class="button" onclick="document.getElementById('signin').style.display='block'"> -->
-                        <router-link :to="{ name : 'Signin'}">
-                          <b-button size="sm" class="button">
-                            <span>Sign In</span>
-                          </b-button>
-                        </router-link>
-                        <router-link :to="{ name : 'register'}">
-                          <b-button size="sm" class="button">
-                            <span>Sign Up</span>
-                          </b-button>
-                        </router-link>
+                       <b-button size="sm" class="button" type="submit" @click="signout()">
+                          <span>Sign Out</span>
+                       </b-button>
                         <!-- The Modal -->
                         <!-- <div id="signin" class="modal">  
                           <div class="modal-content animate" >
@@ -96,6 +89,10 @@ export default {
     };
   },
   methods: {
+    signout() {
+      this.$router.push("/");
+      console.log("signOut");
+    },
     // signIn() {
     //   alert(this.formData.email, this.formData.password)
       // firebase

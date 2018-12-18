@@ -35,6 +35,13 @@
                             required
                             placeholder="Enter Title">
             </b-form-input>
+            <label class="label"><b>Tag : </b></label>
+            <b-form-input   class="input"
+                            type="text"
+                            v-model="blog.tag"
+                            required
+                            placeholder="Enter Tag">
+            </b-form-input>
             <label class="label mt-4"><b>Description : </b></label>
             <b-form-textarea    class="textarea"
                                 type="text"
@@ -130,6 +137,7 @@
     </section> -->
     <section>
       <h3 class="mt-4">{{blog.title}}</h3>
+      <h6 class="mt-4">{{blog.tag}}</h6>
     </section>
 
     <div class="row">
@@ -289,7 +297,8 @@ export default {
             title: this.blog.title,
             description: this.blog.description,
             selected: this.blog.selected,
-            slug: this.slug
+            slug: this.slug,
+            tag: this.blog.tag
           })
           .then(() => {
             // this.$router.push({ name : 'Overviews '})

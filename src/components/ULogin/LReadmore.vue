@@ -1,7 +1,7 @@
 <template>
     <div>
       <!-- User -->
-      <User/>        
+      <LUser/>        
         <b-card class="card" v-if="blog" :key="blog.id">
           <!-- <div class="mb-3" >
             <img blank blank-color="#ccc" width="600" height="450" :src="blog.imagepreview"/>
@@ -18,7 +18,7 @@
             </b-media-body>            
           </b-media>
           <div class="export">
-            <!-- <b-button variant="outline-danger"  v-on:click="_export()">Export</b-button> -->
+            <b-button variant="outline-danger"  v-on:click="_export()">Export</b-button>
           </div> 
          
           <div class="container-carousel">
@@ -74,14 +74,14 @@ import Doughnut from "../Chart/DoughnutChart.js";
 import Pie from "../Chart/PieChart.js";
 import HorizontalBar from "../Chart/HorizontalChart.js";
 //User
-import User from "../User/User.vue";
+import LUser from "../ULogin/LUser.vue";
 //Other
 import Footer from "../Other/Footer.vue";
 import moment from "moment";
 import { Carousel, Slide } from 'vue-carousel';
 import Share from '../Other/Share.vue'
 export default {
-  name: "Readmore",
+  name: "LReadmore",
   components: {
     bargroup,
     Share,
@@ -89,7 +89,7 @@ export default {
     Doughnut,
     Pie,
     HorizontalBar,
-    User,
+    LUser,
     Footer,
     Carousel,
     Slide    
